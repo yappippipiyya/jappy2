@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function Navber() {
   return (
-    <nav className="sticky top-0 z-50 flex items-center rounded-b-3xl bg-white dark:bg-zinc-800">
+    <nav className="sticky top-0 z-50 flex items-center rounded-b-3xl bg-white dark:bg-neutral-800">
       <Link
         href="/"
         className="md:m-5 md:ml-7 m-4 ml-5"
