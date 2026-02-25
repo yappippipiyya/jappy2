@@ -1,11 +1,11 @@
 // app/page.tsx
 import { SignOutButton } from "@/app/ui/auth/signOutButton";
-import Navver from "@/app/ui/navver"
+import Navber from "@/app/ui/navber"
 
 export default async function HomePage() {
   return (
     <>
-      <Navver />
+      <Navber />
       <p>ログイン中</p>
       <SignOutButton />
     </>

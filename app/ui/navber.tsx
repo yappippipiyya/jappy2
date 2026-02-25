@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Navver() {
+export default function Navber() {
   return (
     <nav className="sticky top-0 z-50 flex items-center rounded-b-3xl bg-white dark:bg-zinc-800">
       <Link
