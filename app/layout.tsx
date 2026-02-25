@@ -1,5 +1,5 @@
 import { Noto_Sans_JP } from "next/font/google";
-import "./globals.css";
+import "@/app/ui/globals.css";
 
 const notoSansJp = Noto_Sans_JP({
   subsets: ["latin"],
