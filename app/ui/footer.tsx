@@ -17,7 +17,7 @@ export default function Footer() {
       <div className="flex">
         {NAV_ITEMS.map((item) => {
           const isActive = pathname === item.to;
-          
+
           const activeColor = isActive
             ? "text-yellow-400"
             : "text-gray-900 dark:text-gray-100";
