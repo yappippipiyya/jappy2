@@ -15,35 +15,49 @@ export async function Bands({ userId }: { userId: number }) {
 
   return (
     <div className="flex flex-col gap-4 p-6">
-      {bandsWithUsers.map((b) => (
-        <div
-          key={b.id}
-          className="relative flex items-center justify-between p-6 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 shadow-sm rounded-3xl hover:shadow-md transition-shadow"
-        >
-          <Link href={`/band/${b.id}`} className="flex-1">
-            <div className="flex flex-col gap-2">
+      {bandsWithUsers.map((b) => {
 
-              {/* バンド名 */}
-              <h3 className="text-xl font-bold tracking-tight">
-                {b.name}
-              </h3>
+        const cardBgColor = b.archived
+          ? "bg-zinc-200 dark:bg-zinc-800"
+          : "bg-white dark:bg-zinc-900"
 
-              {/* メンバーセクション */}
-              <div className="flex items-center gap-2 text-sm text-zinc-500">
-                <span className="material-icons text-lg">groups</span>
-                <p className="font-medium">
-                  {b.users.map((u) => u.name).join(" ・ ")}
-                </p>
+        const cardTextColor = b.archived
+          ? "text-zinc-500"
+          : ""
+
+        return (
+          <div
+            key={b.id}
+            className={`relative flex items-center justify-between p-6  ${cardBgColor} border border-gray-100 dark:border-zinc-800 shadow-sm rounded-3xl hover:shadow-md transition-shadow`}
+          >
+            <Link href={`/band/${b.id}`} className="flex-1">
+              <div className="flex flex-col gap-2">
+
+                {/* バンド名 */}
+                <h3 className={`text-xl font-bold tracking-tight ${cardTextColor}`}>
+                  {b.name}
+                </h3>
+
+                {/* メンバーセクション */}
+                <div className="flex items-center gap-2 text-sm text-zinc-500">
+                  <span className="material-icons text-lg">groups</span>
+                  <p className="font-medium">
+                    {b.users.map((u) => u.name).join(" ・ ")}
+                  </p>
+                </div>
               </div>
-            </div>
-          </Link>
+            </Link>
 
-          {/* 右側のコピーボタン（招待用） */}
-          <div className="ml-4">
-            <CopyButton token={b.token || ""} />
+            {/* コピーボタン（招待用） */}
+            {!b.archived && (
+              <div className="ml-4">
+                <CopyButton token={b.token || ""} />
+              </div>
+            )}
           </div>
-        </div>
-      ))}
+        )
+      }
+    )}
     </div>
   )
 }
