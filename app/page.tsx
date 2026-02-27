@@ -23,7 +23,7 @@ export default async function HomePage() {
     <>
       <Navber />
 
-      <div className="-mt-10 pt-10 bg-zinc-50 dark:bg-zinc-950">
+      <div className="-mt-10 pt-10 pb-15 bg-zinc-50 dark:bg-zinc-950">
         <div>
           <h1 className="text-2xl font-bold tracking-tight mt-5 ml-6 -mb-2">バンド練確認</h1>
           <ScheduleCheck />
