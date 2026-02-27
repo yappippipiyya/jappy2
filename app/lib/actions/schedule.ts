@@ -1,10 +1,7 @@
 "use server";
 
 import { createAdminClient } from '@/app/lib/supabase'
-import { Database } from '@/database.types'
-
-type Schedule = Database['public']['Tables']['schedules']['Row']
-type FixedSchedule = Database['public']['Tables']['fixed_schedules']['Row']
+import { Schedule, FixedSchedule } from "@/app/lib/types"
 
 
 export async function updateSchedule(

@@ -1,7 +1,5 @@
 import { createAdminClient } from '@/app/lib/supabase'
-import { Database } from '@/database.types'
-
-type User = Database['public']['Tables']['users']["Row"]
+import { User } from "@/app/lib/types"
 
 
 export async function fetchUser(

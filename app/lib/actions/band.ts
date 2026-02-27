@@ -2,9 +2,8 @@
 
 import { nanoid } from 'nanoid';
 import { createAdminClient } from '@/app/lib/supabase'
-import { Database } from '@/database.types'
+import { Band } from "@/app/lib/types"
 
-type Band = Database['public']['Tables']['bands']['Row']
 
 const generateToken = () => nanoid(16);
 

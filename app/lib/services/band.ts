@@ -1,8 +1,5 @@
 import { createAdminClient } from '@/app/lib/supabase'
-import { Database } from '@/database.types'
-
-type Band = Database['public']['Tables']['bands']['Row']
-type User = Database['public']['Tables']['users']['Row']
+import { Band, User } from "@/app/lib/types"
 
 
 export async function fetchBand(query: { id?: number; token?: string }): Promise<Band | null> {

@@ -1,13 +1,45 @@
+import { auth } from "@/auth";
 import Navber from "@/app/ui/navber"
 import Footer from "@/app/ui/footer"
 
+import { fetchBand, fetchBandUsers } from "@/app/lib/services/band"
+import { fetchUser } from "@/app/lib/services/user"
 
-export default async function Page() {
+import { Header } from "@/app/ui/band/header";
+import { notFound } from "next/navigation";
+
+
+export default async function Page(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
+  const token = params.id;
+  const band = await fetchBand({ token: token })
+
+  if ( !band ) return notFound()
+
+  const [session, bandUsers] = await Promise.all([
+    auth(),
+    fetchBandUsers(band.id),
+  ]);
+
+  const userEmail = session?.user?.email || ""
+
+  if (!userEmail || !bandUsers.some(u => u.email === userEmail)) {
+    return notFound();
+  }
+
+  const currentUser = bandUsers.find(u => u.email === userEmail);
+  const isBandCreator = band.creator_user_id === currentUser?.id;
+
+
   return (
-    <>
+    <main>
       <Navber />
 
+      <div className="-mt-10 pt-10 pb-15 bg-zinc-50 dark:bg-zinc-950">
+        <Header band={band} isBandCreator={isBandCreator} />
+      </div>
+
       <Footer />
-    </>
+    </main>
   );
 }

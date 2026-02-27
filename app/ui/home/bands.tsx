@@ -1,6 +1,6 @@
 import { fetchBands, fetchBandUsers } from "@/app/lib/services/band"
 import Link from "next/link"
-import CopyButton from "./CopyButton"
+import CopyButton from "./copyButton"
 
 
 export async function Bands({ userId }: { userId: number }) {
@@ -14,7 +14,7 @@ export async function Bands({ userId }: { userId: number }) {
   )
 
   return (
-    <div className="flex flex-col gap-4 p-6">
+    <div className="flex flex-col gap-4 p-5">
       {bandsWithUsers.map((b) => {
 
         const cardBgColor = b.archived
@@ -28,9 +28,9 @@ export async function Bands({ userId }: { userId: number }) {
         return (
           <div
             key={b.id}
-            className={`relative flex items-center justify-between p-6  ${cardBgColor} border border-gray-100 dark:border-zinc-800 shadow-sm rounded-3xl hover:shadow-md transition-shadow`}
+            className={`relative flex items-center justify-between p-5  ${cardBgColor} border border-gray-100 dark:border-zinc-800 shadow-sm rounded-3xl hover:shadow-md transition-shadow`}
           >
-            <Link href={`/band/${b.id}`} className="flex-1">
+            <Link href={`/band/${b.token}`} className="flex-1">
               <div className="flex flex-col gap-2">
 
                 {/* バンド名 */}

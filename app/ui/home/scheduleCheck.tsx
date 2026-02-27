@@ -3,8 +3,8 @@ import Link from "next/link"
 
 export async function ScheduleCheck() {
   return (
-    <div className="flex flex-col gap-4 p-6">
-        <div className="relative flex items-center justify-between p-6 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 shadow-sm rounded-xl hover:shadow-md transition-shadow">
+    <div className="flex flex-col gap-4 p-5">
+        <div className="relative flex items-center justify-between p-5 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 shadow-sm rounded-xl hover:shadow-md transition-shadow">
           <div className="mr-4">
             <span className="material-icons text-lg text-yellow-400">music_note</span>
           </div>
