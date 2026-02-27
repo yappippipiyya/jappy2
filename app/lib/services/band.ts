@@ -38,7 +38,6 @@ export async function fetchBands(user_id: number): Promise<Band[]> {
 
     if (error) throw error;
 
-    console.log(bandsData)
     return bandsData;
 
   } catch (error) {
