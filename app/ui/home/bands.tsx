@@ -20,7 +20,7 @@ export async function Bands({ userId }: { userId: number }) {
           key={b.id}
           className="relative flex items-center justify-between p-6 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 shadow-sm rounded-3xl hover:shadow-md transition-shadow"
         >
-          <Link href={`/${b.id}/band`} className="flex-1">
+          <Link href={`/band/${b.id}`} className="flex-1">
             <div className="flex flex-col gap-2">
 
               {/* バンド名 */}
