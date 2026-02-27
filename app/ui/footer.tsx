@@ -13,7 +13,7 @@ export default function Footer() {
   ];
 
   return (
-    <nav className="rounded-t-2xl fixed bottom-0 left-0 z-50 w-full border-t border-neutral-100 bg-white dark:border-neutral-700 dark:bg-neutral-800">
+    <nav className="rounded-t-2xl fixed bottom-0 left-0 z-50 w-full border-t border-neutral-100 bg-white dark:border-neutral-700 dark:bg-neutral-900">
       <div className="flex">
         {NAV_ITEMS.map((item) => {
           const isActive = pathname === item.to;

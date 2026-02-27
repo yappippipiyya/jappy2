@@ -14,22 +14,22 @@ export async function Bands({ userId }: { userId: number }) {
   )
 
   return (
-    <div className="flex flex-col gap-4 p-6 bg-gray-50">
+    <div className="flex flex-col gap-4 p-6">
       {bandsWithUsers.map((b) => (
         <div
           key={b.id}
-          className="relative flex items-center justify-between p-6 bg-white border border-gray-100 shadow-sm rounded-3xl hover:shadow-md transition-shadow"
+          className="relative flex items-center justify-between p-6 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 shadow-sm rounded-3xl hover:shadow-md transition-shadow"
         >
           <Link href={`/${b.id}/band`} className="flex-1">
             <div className="flex flex-col gap-2">
 
               {/* バンド名 */}
-              <h3 className="text-xl font-bold text-slate-800 tracking-tight">
+              <h3 className="text-xl font-bold tracking-tight">
                 {b.name}
               </h3>
 
               {/* メンバーセクション */}
-              <div className="flex items-center gap-2 text-sm text-slate-500">
+              <div className="flex items-center gap-2 text-sm text-zinc-500">
                 <span className="material-icons text-lg">groups</span>
                 <p className="font-medium">
                   {b.users.map((u) => u.name).join(" ・ ")}
