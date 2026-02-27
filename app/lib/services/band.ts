@@ -33,11 +33,12 @@ export async function fetchBands(user_id: number): Promise<Band[]> {
       .from("bands")
       .select("*, band_user!inner(user_id)")
       .eq("band_user.user_id", user_id)
-      .order("archived", { ascending: true })
-      .order("end_date", { ascending: false });
+      .order("archived", { ascending: true, nullsFirst: true })
+      .order("end_date", { ascending: false, nullsFirst: false });
 
     if (error) throw error;
 
+    console.log(bandsData)
     return bandsData;
 
   } catch (error) {
