@@ -30,13 +30,14 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   const currentUser = bandUsers.find(u => u.email === userEmail);
   const isBandCreator = band.creator_user_id === currentUser?.id;
 
+  const isArchived = band.archived || false
 
   return (
     <main>
       <Navber />
 
       <div className="-mt-10 pt-10 pb-15 bg-zinc-50 dark:bg-zinc-950">
-        <Header band={band} isBandCreator={isBandCreator} />
+        <Header band={band} isCreator={isBandCreator} isArchived={isArchived} />
       </div>
 
       <Footer />
