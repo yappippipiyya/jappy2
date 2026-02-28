@@ -3,9 +3,10 @@ import Navber from "@/app/ui/navber"
 import Footer from "@/app/ui/footer"
 
 import { fetchBand, fetchBandUsers } from "@/app/lib/services/band"
-import { fetchUser } from "@/app/lib/services/user"
+import { fetchSchedules } from "@/app/lib/services/schedule"
 
 import { Header } from "@/app/ui/band/header";
+import { BandContent } from "@/app/ui/band/bandContent";
 import { notFound } from "next/navigation";
 
 
@@ -16,9 +17,10 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 
   if ( !band ) return notFound()
 
-  const [session, bandUsers] = await Promise.all([
+  const [session, bandUsers, schedules] = await Promise.all([
     auth(),
     fetchBandUsers(band.id),
+    fetchSchedules(null, band.id)
   ]);
 
   const userEmail = session?.user?.email || ""
@@ -38,6 +40,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 
       <div className="-mt-10 pt-10 pb-15 bg-zinc-50 dark:bg-zinc-950">
         <Header band={band} isCreator={isBandCreator} isArchived={isArchived} />
+        <BandContent band={band} schedules={schedules}/>
       </div>
 
       <Footer />
