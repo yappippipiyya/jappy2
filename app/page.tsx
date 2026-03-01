@@ -20,22 +20,27 @@ export default async function HomePage() {
   const bands = await fetchBands(user.id)
 
   return (
-    <main>
+    <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <Navber />
 
-      <div className="-mt-10 pt-10 pb-15 bg-zinc-50 dark:bg-zinc-950">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight mt-5 ml-5 -mb-2">バンド練確認</h1>
-          <ScheduleCheck />
-        </div>
+      <div className="max-w-2xl mx-auto pb-20">
 
-        <div>
-          <div className="relative flex items-center justify-between mt-3 ml-5 -mb-2">
-            <h1 className="text-2xl font-bold tracking-tight">バンド一覧</h1>
+        {/* スケジュールセクション */}
+        <section className="animate-in fade-in slide-in-from-top-4 duration-700">
+          <ScheduleCheck bands={bands} />
+        </section>
+
+        {/* バンド一覧セクション */}
+        <section className="mt-2 animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both">
+          <div className="flex items-center justify-between px-5">
+            <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+              バンド一覧
+            </h2>
             <CreateButton />
           </div>
-          <Bands userId={ user.id } />
-       </div>
+
+          <Bands bands={bands} />
+        </section>
       </div>
 
       <Footer />

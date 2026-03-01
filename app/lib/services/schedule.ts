@@ -11,13 +11,13 @@ export async function fetchSchedules(
 
     let query = supabase.from("schedules").select("*")
 
-    if (user_id) {
-      query = query.eq("user_id", user_id)
-    } else if (band_id) {
-      query = query.eq("band_id", band_id)
-    } else {
-      return []
-    }
+    const hasUser = user_id !== null && user_id !== undefined;
+    const hasBand = band_id !== null && band_id !== undefined;
+
+    if (!hasUser && !hasBand) return [];
+
+    if (hasUser) query = query.eq("user_id", user_id);
+    if (hasBand) query = query.eq("band_id", band_id);
 
     const { data: scheduleData, error } = await query
 

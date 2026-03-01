@@ -13,7 +13,7 @@ import { notFound } from "next/navigation";
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const token = params.id;
-  const band = await fetchBand({ token: token })
+  const band = await fetchBand(null, token)
 
   if ( !band ) return notFound()
 

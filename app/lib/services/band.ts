@@ -2,19 +2,26 @@ import { createAdminClient } from '@/app/lib/supabase'
 import { Band, User } from "@/app/lib/types"
 
 
-export async function fetchBand(query: { id?: number; token?: string }): Promise<Band | null> {
+export async function fetchBand(id: number | null = null, token: string | null = null): Promise<Band | null> {
   try {
     const supabase = createAdminClient()
 
     let request = supabase.from("bands").select("*");
 
-    if (query.id) request = request.eq("id", query.id);
-    else if (query.token) request = request.eq("token", query.token);
-    else return null;
+    if (id) {
+      request = request.eq("id", id);
+    } else if (token) {
+      request = request.eq("token", token);
+    } else {
+      return null;
+    }
 
     const { data, error } = await request.single();
+
     if (error) throw error;
-    return data as Band;
+
+    return data;
+
   } catch (error) {
     console.error("データベースエラー(getBand):", error);
     return null;
