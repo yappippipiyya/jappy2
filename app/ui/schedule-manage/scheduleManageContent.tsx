@@ -3,6 +3,7 @@
 import { Band, Schedule } from "@/app/lib/types";
 
 import { SelectMenu } from "@/app/ui/schedule-manage/selectMenu";
+import { ActionButtons } from "@/app/ui/schedule-manage/actionButtons";
 
 import { useState } from "react";
 
@@ -18,8 +19,8 @@ export function ScheduleManageContent({ bands, schedules }: {
   return (
     <>
         <SelectMenu selectedBandId={selectedBandId} setSelectedBandId={setSelectedBandId} bandNameMap={bandNameMap}/>
-        {/* <ActionButtons />
-        <Table /> */}
+        <ActionButtons selectedBandId={selectedBandId} bandNameMap={bandNameMap}/>
+        {/* <Table /> */}
     </>
   )
 }
