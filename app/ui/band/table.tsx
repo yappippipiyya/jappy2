@@ -1,4 +1,4 @@
-import { Band, Schedule } from "@/app/lib/types";
+import { Band, Schedule, User } from "@/app/lib/types";
 import { useMemo, useState, useEffect, useRef } from "react";
 import { updateSchedule } from "@/app/lib/actions/schedule";
 
@@ -6,10 +6,50 @@ import { updateSchedule } from "@/app/lib/actions/schedule";
 type SaveStatus = "idle" | "saving" | "saved" | "error";
 
 
-export function Table({ mode, band, schedules }: { mode: "view" | "edit", band: Band, schedules: Schedule[] }) {
+export function Table({ mode, band, schedules, bandUsers }: { mode: "view" | "edit", band: Band, schedules: Schedule[], bandUsers: User[]}) {
   const [checkedStates, setCheckedStates] = useState<Record<string, boolean>>({});
   const [status, setStatus] = useState<SaveStatus>("idle");
   const isInitialMount = useRef(true);
+
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const hasScrolledToToday = useRef(false);
+
+  const [tooltip, setTooltip] = useState<{
+    text: string;
+    x: number;
+    y: number;
+  } | null>(null);
+
+  useEffect(() => {
+    const hideTooltip = () => setTooltip(null);
+    window.addEventListener("scroll", hideTooltip, true);
+    window.addEventListener("click", hideTooltip);
+    window.addEventListener("touchstart", hideTooltip);
+
+    return () => {
+      window.removeEventListener("scroll", hideTooltip, true);
+      window.removeEventListener("click", hideTooltip);
+      window.removeEventListener("touchstart", hideTooltip);
+    };
+  },[]);
+
+  const handleCellInteraction = (e: React.MouseEvent | React.TouchEvent, text: string) => {
+    e.stopPropagation();
+    if (!text) return;
+
+    const target = e.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
+
+    setTooltip({
+      text,
+      x: rect.left + rect.width / 2,
+      y: rect.top,
+    });
+  };
+
+  const handleCellLeave = () => {
+    setTooltip(null);
+  };
 
   const saveSchedule = async (currentStates: Record<string, boolean>) => {
     setStatus("saving");
@@ -36,8 +76,7 @@ export function Table({ mode, band, schedules }: { mode: "view" | "edit", band: 
   };
 
   useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
+    if (Object.keys(checkedStates).length === 0) {
       return;
     }
 
@@ -51,10 +90,10 @@ export function Table({ mode, band, schedules }: { mode: "view" | "edit", band: 
 
 
   const { dateList, hours, scheduleMatrix } = useMemo(() => {
-
     if (!band.start_date || !band.end_date || !band.start_time || !band.end_time || !schedules) {
       return { dateList: [], hours:[], scheduleMatrix: {} };
     }
+
 
     const startHour = Number(band.start_time.slice(0, 2));
     const endHour = Number(band.end_time.slice(0, 2));
@@ -117,7 +156,32 @@ export function Table({ mode, band, schedules }: { mode: "view" | "edit", band: 
   }, [band, schedules]);
 
 
+  useEffect(() => {
+    if (dateList.length === 0 || hasScrolledToToday.current) return;
+
+    const today = new Date();
+    const todayKey = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
+
+    const todayTh = document.getElementById(`date-th-${todayKey}`);
+    const container = scrollContainerRef.current;
+
+    if (todayTh && container) {
+      const stickyWidth = 40;
+      const scrollPosition = container.scrollLeft + (todayTh.getBoundingClientRect().left - container.getBoundingClientRect().left);
+
+      container.scrollTo({
+        left: scrollPosition - stickyWidth,
+        behavior: 'smooth'
+      });
+    }
+
+    hasScrolledToToday.current = true;
+  },[dateList]);
+
+
   if (dateList.length === 0) return null;
+
+  const userMap = Object.fromEntries(bandUsers.map(b => [b.id, b.name]));
 
   return (
     <div>
@@ -135,7 +199,10 @@ export function Table({ mode, band, schedules }: { mode: "view" | "edit", band: 
       </div>
 
       {/* テーブル表 */}
-      <div className="m-5 overflow-auto border border-slate-200 dark:border-zinc-700 rounded-xl bg-white dark:bg-black">
+      <div
+        ref={scrollContainerRef}
+        className="m-5 overflow-auto border border-slate-200 dark:border-zinc-700 rounded-xl bg-white dark:bg-black"
+      >
         <table className="w-full text-sm text-center border-collapse min-w-max">
           <thead>
             <tr>
@@ -148,6 +215,7 @@ export function Table({ mode, band, schedules }: { mode: "view" | "edit", band: 
               {dateList.map(({ key, label }) => (
                 <th
                   key={key}
+                  id={`date-th-${key}`}
                   className="sticky top-0 z-20 bg-slate-100 dark:bg-gray-800 border-b border-r border-slate-200 dark:border-zinc-700 p-2 min-w-11 whitespace-pre-wrap leading-tight text-slate-700 dark:text-zinc-200 font-semibold text-xs"
                 >
                   {label}
@@ -167,8 +235,12 @@ export function Table({ mode, band, schedules }: { mode: "view" | "edit", band: 
                 {dateList.map(({ key }) => {
                   const cellId = `${key}-${hour}`;
                   const cellData = scheduleMatrix[key]?.[hour];
+                  const memberIds = cellData?.memberIds ?? [];
                   const memberCount = cellData?.memberIds.length ?? 0;
                   const isPractice = checkedStates[cellId] ?? (cellData?.bandPractice || false);
+                  const tooltipText = memberCount > 0
+                    ? `${memberCount}人参加可能\n${memberIds.map(id => `・${userMap[id] || "不明"}`).join('\n')}`
+                    : "参加可能者なし";
 
                   const bgColors = [
                     "bg-white dark:bg-zinc-900",
@@ -183,9 +255,12 @@ export function Table({ mode, band, schedules }: { mode: "view" | "edit", band: 
                   return (
                     <td
                       key={`${key}-${hour}`}
+                      onMouseEnter={(e) => handleCellInteraction(e, tooltipText)}
+                      onMouseLeave={handleCellLeave}
+                      onClick={(e) => handleCellInteraction(e, tooltipText)}
                       className={`border-b border-r border-slate-200 dark:border-zinc-700 p-2 transition-colors duration-150 ${bgColors[memberCount] || "bg-sky-500 dark:bg-sky-100"} ${
                         isPractice
-                          ? "bg-size-[8px_8px] z-10 relative font-semibold outline-2 -outline-offset-2 outline-[#00a1ff] bg-[linear-gradient(45deg,#00a1ff_25%,transparent_25%,transparent_50%,#00a1ff_50%,#00a1ff_75%,transparent_75%,transparent)] dark:outline-[#0051ff] dark:bg-[linear-gradient(45deg,#0051ff_25%,transparent_25%,transparent_50%,#0051ff_50%,#0051ff_75%,transparent_75%,transparent)]"
+                          ? "bg-size-[8px_8px] relative font-semibold outline-2 -outline-offset-2 outline-[#00a1ff] bg-[linear-gradient(45deg,#00a1ff_25%,transparent_25%,transparent_50%,#00a1ff_50%,#00a1ff_75%,transparent_75%,transparent)] dark:outline-[#0051ff] dark:bg-[linear-gradient(45deg,#0051ff_25%,transparent_25%,transparent_50%,#0051ff_50%,#0051ff_75%,transparent_75%,transparent)]"
                           : "text-slate-700 dark:text-zinc-300"
                       }`}
                     >
@@ -212,6 +287,19 @@ export function Table({ mode, band, schedules }: { mode: "view" | "edit", band: 
           </tbody>
         </table>
       </div>
+      {tooltip && (
+        <div
+          className="fixed z-50 px-3 py-2 text-xs font-medium leading-relaxed text-white bg-slate-800 dark:bg-zinc-700 rounded-md shadow-xl pointer-events-none whitespace-pre-wrap w-max max-w-50"
+          style={{
+            left: `${tooltip.x}px`,
+            top: `${tooltip.y - 8}px`,
+            transform: "translate(-50%, -100%)",
+          }}
+        >
+          {tooltip.text}
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-[6px] border-transparent border-t-slate-800 dark:border-t-zinc-700" />
+        </div>
+      )}
     </div>
   );
 }
