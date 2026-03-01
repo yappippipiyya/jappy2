@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { Suspense } from "react";
 
 import Navber from "@/app/ui/navber"
 import Footer from "@/app/ui/footer"
@@ -8,6 +9,9 @@ import { Bands } from "@/app/ui/home/bands"
 
 import { fetchUser } from "@/app/lib/services/user"
 import { fetchBands } from "@/app/lib/services/band"
+
+import { BandsSkeletons } from "@/app/ui/skeletons";
+
 
 export default async function HomePage() {
   const session = await auth()
@@ -39,7 +43,9 @@ export default async function HomePage() {
             <CreateButton />
           </div>
 
-          <Bands bands={bands} />
+          <Suspense fallback={<BandsSkeletons />}>
+            <Bands bands={bands} />
+          </Suspense>
         </section>
       </div>
 
