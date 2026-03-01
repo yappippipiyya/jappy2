@@ -99,7 +99,7 @@ return (
 
     {/* 全確認ボタン */}
     <Link
-      href="/schedule-check"
+      href="/all-schedules"
       className="group flex items-center justify-between p-3 bg-white dark:bg-zinc-900 rounded-2xl shadow-lg shadow-zinc-200 dark:shadow-none"
     >
       <div className="flex items-center gap-3">
