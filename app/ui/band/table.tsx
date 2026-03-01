@@ -125,7 +125,7 @@ export function Table({ mode, band, schedules }: { mode: "view" | "edit", band: 
                     key={`${key}-${hour}`}
                     className={`border-b border-r border-slate-200 dark:border-zinc-700 p-2 transition-colors duration-150 ${bgColors[memberCount] || "bg-sky-500 dark:bg-sky-100"} ${
                       isPractice
-                        ? "bg-size-[8px_8px] z-10 relative font-semibold outline-2 -outline-offset-2 outline-[#00a1ff] bg-[linear-gradient(45deg,#00a1ff_25%,transparent_25%,transparent_50%,#00a1ff_50%,#00a1ff_75%,transparent_75%,transparent)] dark:outline-[#000f99] dark:bg-[linear-gradient(45deg,#000f99_25%,transparent_25%,transparent_50%,#000f99_50%,#000f99_75%,transparent_75%,transparent)]"
+                        ? "bg-size-[8px_8px] z-10 relative font-semibold outline-2 -outline-offset-2 outline-[#00a1ff] bg-[linear-gradient(45deg,#00a1ff_25%,transparent_25%,transparent_50%,#00a1ff_50%,#00a1ff_75%,transparent_75%,transparent)] dark:outline-[#0051ff] dark:bg-[linear-gradient(45deg,#0051ff_25%,transparent_25%,transparent_50%,#0051ff_50%,#0051ff_75%,transparent_75%,transparent)]"
                         : "text-slate-700 dark:text-zinc-300"
                     }`}
                   >
