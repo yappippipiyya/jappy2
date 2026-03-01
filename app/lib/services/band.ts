@@ -29,16 +29,21 @@ export async function fetchBand(id: number | null = null, token: string | null =
 }
 
 
-export async function fetchBands(user_id: number): Promise<Band[]> {
+export async function fetchBands(user_id: number, isNotArchived: boolean = false): Promise<Band[]> {
   try {
     const supabase = createAdminClient()
 
-    const { data: bandsData, error } = await supabase
+    let queue = supabase
       .from("bands")
       .select("*, band_user!inner(user_id)")
       .eq("band_user.user_id", user_id)
       .order("archived", { ascending: true, nullsFirst: true })
-      .order("end_date", { ascending: false, nullsFirst: false });
+      .order("end_date", { ascending: false, nullsFirst: false })
+
+    if (isNotArchived) queue = queue.or('archived.eq.false,archived.is.null')
+
+    const { data: bandsData, error } = await queue
+
 
     if (error) throw error;
 
