@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ModeSwitch } from "./modeSwitch";
-import { Table } from "./table";
+import { Table } from "./table/index";
 import { Band, Schedule, User } from "@/app/lib/types"
 
 
