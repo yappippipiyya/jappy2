@@ -1,8 +1,10 @@
 "use server";
 
+import { auth } from '@/auth';
 import { createAdminClient } from '@/app/lib/supabase'
 import { Schedule, FixedSchedule } from "@/app/lib/types"
-
+import { fetchUser } from '@/app/lib/services/user';
+import { fetchBands } from '../services/band';
 
 export async function updateSchedule(
   user_id: number,
@@ -10,6 +12,27 @@ export async function updateSchedule(
   band_id: number,
   comment: string
 ): Promise<Schedule | null> {
+
+  const session = await auth()
+  const email = session?.user?.email || ""
+  const user = await fetchUser(null, email)
+
+  if (!user) return null;
+
+  const isOwnSchedule = user.id === user_id;
+  const isBandPractice = user_id === 0;
+
+  if (!isOwnSchedule && !isBandPractice) {
+    return null;
+  }
+
+  if (isBandPractice) {
+    const bands = await fetchBands(user.id)
+    const isMember = bands.some(b => b.id === band_id)
+
+    if (!isMember) return null
+  }
+
   try {
     const supabase = createAdminClient()
 
