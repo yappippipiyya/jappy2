@@ -111,6 +111,7 @@ return (
           全てのバンド練を確認
         </span>
       </div>
+      <span className="material-icons text-zinc-300 dark:text-zinc-700 mr-1">chevron_right</span>
     </Link>
   </div>
 );
