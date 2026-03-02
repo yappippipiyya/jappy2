@@ -16,10 +16,15 @@ export default async function Page() {
 
   if (!user) return
 
-  const [bands, schedules] = await Promise.all([
-    fetchBands(user.id, true),
-    fetchSchedules(user.id, null)
+  const bands = await fetchBands(user.id, true)
+  const bandIds = bands.map((b) => b.id)
+
+  const [userSchedules, bandSchedules] = await Promise.all([
+    fetchSchedules(user.id, null),
+    fetchSchedules(null, null, bandIds),
   ]);
+
+  const schedules = [...userSchedules, ...bandSchedules]
 
   return (
     <>
@@ -29,7 +34,7 @@ export default async function Page() {
         <h1 className="m-7 text-center justify-center text-2xl font-bold tracking-tight ">
           スケジュール管理
         </h1>
-        <ScheduleManageContent bands={bands} schedules={schedules}/>
+        <ScheduleManageContent user={user} bands={bands} schedules={schedules}/>
 
       </div>
 

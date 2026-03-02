@@ -4,7 +4,8 @@ import { Schedule, FixedSchedule } from "@/app/lib/types"
 
 export async function fetchSchedules(
   user_id: number | null = null,
-  band_id: number | null = null
+  band_id: number | null = null,
+  band_ids: number[] | null = null
 ): Promise<Schedule[]> {
   try {
     const supabase = createAdminClient()
@@ -13,11 +14,14 @@ export async function fetchSchedules(
 
     const hasUser = user_id !== null && user_id !== undefined;
     const hasBand = band_id !== null && band_id !== undefined;
+    const hasBands = band_ids !== null && band_ids !== undefined;
 
-    if (!hasUser && !hasBand) return [];
+
+    if (!hasUser && !hasBand && !hasBands) return [];
 
     if (hasUser) query = query.eq("user_id", user_id);
     if (hasBand) query = query.eq("band_id", band_id);
+    if (hasBands) query = query.in("band_id", band_ids);
 
     const { data: scheduleData, error } = await query
 
