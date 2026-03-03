@@ -5,7 +5,7 @@ import Footer from "@/app/ui/footer"
 
 import { ScheduleManageContent } from "@/app/ui/schedule-manage/scheduleManageContent";
 import { fetchBands } from "@/app/lib/services/band";
-import { fetchSchedules } from "@/app/lib/services/schedule";
+import { fetchSchedules, fetchFixedSchedules } from "@/app/lib/services/schedule";
 import { fetchUser } from "@/app/lib/services/user";
 
 
@@ -19,9 +19,10 @@ export default async function Page() {
   const bands = await fetchBands(user.id, true)
   const bandIds = bands.map((b) => b.id)
 
-  const [userSchedules, bandSchedules] = await Promise.all([
+  const [userSchedules, bandSchedules, fixedSchedules] = await Promise.all([
     fetchSchedules(user.id, null),
     fetchSchedules(null, null, bandIds),
+    fetchFixedSchedules(user.id),
   ]);
 
   const schedules = [...userSchedules, ...bandSchedules]
@@ -34,7 +35,7 @@ export default async function Page() {
         <h1 className="m-7 text-center justify-center text-2xl font-bold tracking-tight ">
           スケジュール管理
         </h1>
-        <ScheduleManageContent user={user} bands={bands} schedules={schedules}/>
+        <ScheduleManageContent user={user} bands={bands} schedules={schedules} fixedSchedules={fixedSchedules} />
 
       </div>
 

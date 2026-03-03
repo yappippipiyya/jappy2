@@ -1,16 +1,18 @@
 "use client";
 
-import { Band, User, Schedule } from "@/app/lib/types";
+import { Band, User, Schedule, FixedSchedule } from "@/app/lib/types";
 
 import { SelectMenu } from "@/app/ui/schedule-manage/selectMenu";
 import { ActionButtons } from "@/app/ui/schedule-manage/actionButtons";
+import { GuideInfo } from "@/app/ui/schedule-manage/guideInfo";
 import { Table } from "@/app/ui/schedule-manage/table/index";
+import { CommentBox } from "@/app/ui/schedule-manage/commentBox";
 
 import { useState, useMemo, useCallback } from "react";
 
 
-export function ScheduleManageContent({ user, bands, schedules }: {
-  user: User, bands: Band[], schedules: Schedule[]
+export function ScheduleManageContent({ user, bands, schedules, fixedSchedules }: {
+  user: User, bands: Band[], schedules: Schedule[], fixedSchedules: FixedSchedule[]
 }) {
   const [selectedBandId, setSelectedBandId] = useState(0)
   const [localSchedules, setLocalSchedules] = useState<Schedule[]>(schedules)
@@ -44,8 +46,10 @@ export function ScheduleManageContent({ user, bands, schedules }: {
   return (
     <>
       <SelectMenu selectedBandId={selectedBandId} setSelectedBandId={setSelectedBandId} bandNameMap={bandNameMap} />
-      <ActionButtons user={user} selectedBandId={selectedBandId} bandNameMap={bandNameMap} schedules={localSchedules} onScheduleUpdate={onScheduleUpdate} />
+      <ActionButtons user={user} selectedBandId={selectedBandId} bandNameMap={bandNameMap} schedules={localSchedules} fixedSchedules={fixedSchedules} onScheduleUpdate={onScheduleUpdate} />
+      <GuideInfo selectedBandId={selectedBandId} />
       <Table user={user} selectedBandId={selectedBandId} band={band} bands={bands} schedules={localSchedules} bandMap={bandMap} onScheduleUpdate={onScheduleUpdate} />
+      <CommentBox user={user} selectedBandId={selectedBandId} schedules={localSchedules} onScheduleUpdate={onScheduleUpdate} />
     </>
   )
 }
