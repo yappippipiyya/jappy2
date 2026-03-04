@@ -149,13 +149,18 @@ export function useScheduleSave(user: User, bandId: number, dateList: DateListIt
     }
   }, [user.id, bandId, dateList, hours, scheduleMatrix, onSaved]);
 
+  const saveRef = useRef(saveSchedule);
+  useEffect(() => {
+    saveRef.current = saveSchedule;
+  }, [saveSchedule]);
+
   useEffect(() => {
     if (Object.keys(checkedStates).length === 0) return;
 
     setStatus("saving");
-    const timer = setTimeout(() => saveSchedule(checkedStates), 1000);
+    const timer = setTimeout(() => saveRef.current(checkedStates), 1000);
     return () => clearTimeout(timer);
-  }, [checkedStates, saveSchedule]);
+  }, [checkedStates]);
 
   return { checkedStates, setCheckedStates, status };
 }

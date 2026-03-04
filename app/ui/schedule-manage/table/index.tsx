@@ -13,6 +13,42 @@ export function Table({ user, selectedBandId, band, bands, schedules, bandMap, o
   const { tooltip, handleInteract, handleLeave } = useTableTooltip();
   useTableScroll(dateList, scrollContainerRef, selectedBandId);
 
+  const toggleColumn = (dateKey: string) => {
+    const allSelected = hours.every(hour => {
+      const cellId = `${dateKey}-${hour}`;
+      return checkedStates[cellId] ?? (scheduleMatrix[dateKey]?.[hour]?.isAvailable || false);
+    });
+    
+    const newState = !allSelected;
+    
+    setCheckedStates(prev => {
+      const next = { ...prev };
+      hours.forEach(hour => {
+        const cellId = `${dateKey}-${hour}`;
+        next[cellId] = newState;
+      });
+      return next;
+    });
+  };
+
+  const toggleRow = (hour: number) => {
+    const allSelected = dateList.every(({ key }) => {
+      const cellId = `${key}-${hour}`;
+      return checkedStates[cellId] ?? (scheduleMatrix[key]?.[hour]?.isAvailable || false);
+    });
+    
+    const newState = !allSelected;
+    
+    setCheckedStates(prev => {
+      const next = { ...prev };
+      dateList.forEach(({ key }) => {
+        const cellId = `${key}-${hour}`;
+        next[cellId] = newState;
+      });
+      return next;
+    });
+  };
+
   if (dateList.length === 0) return null;
 
   return (
@@ -27,7 +63,12 @@ export function Table({ user, selectedBandId, band, bands, schedules, bandMap, o
                 <span className="text-xs font-bold block">時刻</span>
               </th>
               {dateList.map(({ key, label }) => (
-                <th key={key} id={`date-th-${key}`} className="sticky top-0 z-20 bg-slate-100 dark:bg-gray-800 border-b border-r border-slate-200 dark:border-zinc-700 p-2 min-w-11 whitespace-pre-wrap leading-tight text-slate-700 dark:text-zinc-200 font-semibold text-xs">
+                <th
+                  key={key}
+                  id={`date-th-${key}`}
+                  className="sticky top-0 z-20 bg-slate-100 hover:bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-b border-r border-slate-200 dark:border-zinc-700 p-2 min-w-11 whitespace-pre-wrap leading-tight text-slate-700 dark:text-zinc-200 font-semibold text-xs cursor-pointer transition-colors"
+                  onClick={() => toggleColumn(key)}
+                >
                   {label}
                 </th>
               ))}
@@ -36,7 +77,10 @@ export function Table({ user, selectedBandId, band, bands, schedules, bandMap, o
           <tbody>
             {hours.map((hour) => (
               <tr key={hour} className="group">
-                <td className="sticky left-0 z-10 bg-slate-50 dark:bg-zinc-800 border-b border-r border-slate-200 dark:border-zinc-700 p-2 text-slate-600 dark:text-zinc-300 font-semibold text-xs transition-colors">
+                <td
+                  className="sticky left-0 z-10 bg-slate-50 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 border-b border-r border-slate-200 dark:border-zinc-700 p-2 text-slate-600 dark:text-zinc-300 font-semibold text-xs cursor-pointer transition-colors"
+                  onClick={() => toggleRow(hour)}
+                >
                   {hour}
                 </td>
                 {dateList.map(({ key }) => {
