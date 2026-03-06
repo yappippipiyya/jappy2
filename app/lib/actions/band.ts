@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid';
 import { createAdminClient } from '@/app/lib/supabase'
 import { Band } from "@/app/lib/types"
 import { fetchUser } from '@/app/lib/services/user';
-import { fetchBands } from '../services/band';
+import { fetchBand, fetchBands } from '../services/band';
 
 
 const generateToken = () => nanoid(16);
@@ -110,13 +110,23 @@ export async function updateBandArchiveStatus(band_id: number, archived: boolean
 }
 
 
-export async function addBandMember(user_id: number, band_id: number): Promise<boolean | null> {
+export async function joinBand(token: string): Promise<boolean> {
+  const band = await fetchBand(null, token)
+  if (!band) return false;
+
+  const session = await auth()
+  const email = session?.user?.email || ""
+  const user = await fetchUser(null, email)
+
+  if (!user) return false;
+  const userId = user.id
+
   try {
     const supabase = createAdminClient()
 
     const { error: memberError } = await supabase.from("band_user").insert({
-      user_id: user_id,
-      band_id: band_id
+      user_id: userId,
+      band_id: band.id
     });
 
     if (memberError) throw memberError;
@@ -124,19 +134,26 @@ export async function addBandMember(user_id: number, band_id: number): Promise<b
     return true;
   } catch (error) {
     console.error("データベースエラー(addMember):", error);
-    return null;
+    return false;
   }
 }
 
 
-export async function removeBandMember(user_id: number, band_id: number): Promise<boolean> {
+export async function leaveBand(band_id: number): Promise<boolean> {
   if (band_id === 0) return false;
+
+  const session = await auth()
+  const email = session?.user?.email || ""
+  const user = await fetchUser(null, email)
+
+  if (!user) return false;
+  const userId = user.id
 
   try {
     const supabase = createAdminClient()
 
-    await supabase.from("band_user").delete().match({ user_id, band_id });
-    await supabase.from("schedules").delete().match({ user_id, band_id });
+    await supabase.from("band_user").delete().match({ userId, band_id });
+    await supabase.from("schedules").delete().match({ userId, band_id });
     return true;
   } catch (error) {
     console.error("データベースエラー(removeMember):", error);
@@ -145,6 +162,19 @@ export async function removeBandMember(user_id: number, band_id: number): Promis
 }
 
 export async function deleteBand(band_id: number): Promise<boolean> {
+  if (band_id === 0) return false;
+
+  const session = await auth()
+  const email = session?.user?.email || ""
+  const user = await fetchUser(null, email)
+
+  if (!user) return false;
+
+  const bands = await fetchBands(user.id, true);
+  const isBandCreator = bands?.some(b => b.creator_user_id === user.id && b.id === band_id)
+
+  if (!isBandCreator) return false;
+
   try {
     const supabase = createAdminClient()
 

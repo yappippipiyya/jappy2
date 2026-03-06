@@ -2,20 +2,35 @@
 
 import { useState } from "react";
 
-import { updateBandArchiveStatus } from "@/app/lib/actions/band";
+import { updateBandArchiveStatus, leaveBand, deleteBand } from "@/app/lib/actions/band";
 import { useRouter } from "next/navigation";
+import { Band } from "@/app/lib/types";
 
 
-export function KebabMenu({ bandId, isCreator, isArchived }: { bandId: number, isCreator: boolean, isArchived: boolean }) {
+export function KebabMenu({ band, isCreator, isArchived }: { band: Band, isCreator: boolean, isArchived: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
   const handleArchive = async () => {
-    const success = await updateBandArchiveStatus(bandId, !isArchived);
+    const success = await updateBandArchiveStatus(band.id, !isArchived);
     if (success) {
-      router.push("/"); 
+      router.push("/");
     }
   };
+
+  const deleteTheBand = async () => {
+    const success = await deleteBand(band.id);
+    if (success) {
+      router.push("/")
+    }
+  }
+
+  const leaveTheBand = async () => {
+    const success = await leaveBand(band.id);
+    if (success) {
+      router.push("/");
+    }
+  }
 
   const menuItems = [
     isArchived
@@ -23,10 +38,10 @@ export function KebabMenu({ bandId, isCreator, isArchived }: { bandId: number, i
       : { icon: "archive", text: "アーカイブ", onClick: handleArchive, color: "text-zinc-700 dark:text-zinc-200" },
     ...(isCreator
       ? [
-          { icon: "edit", text: "編集する", onClick: () => {}, color: "text-zinc-700 dark:text-zinc-200" },
-          { icon: "delete", text: "削除する", onClick: () => {}, color: "text-red-500" },
+          { icon: "edit", text: "編集する", onClick: () => {router.push(`/band/${band.token}/edit`)}, color: "text-zinc-700 dark:text-zinc-200" },
+          { icon: "delete", text: "削除する", onClick: deleteTheBand, color: "text-red-500" },
         ]
-      : [{ icon: "logout", text: "脱退する", onClick: () => {}, color: "text-yellow-500" }]),
+      : [{ icon: "logout", text: "脱退する", onClick: leaveTheBand, color: "text-yellow-500" }]),
   ];
 
   return (
