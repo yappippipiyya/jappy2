@@ -147,13 +147,13 @@ export async function leaveBand(band_id: number): Promise<boolean> {
   const user = await fetchUser(null, email)
 
   if (!user) return false;
-  const userId = user.id
+  const user_id = user.id
 
   try {
     const supabase = createAdminClient()
 
-    await supabase.from("band_user").delete().match({ userId, band_id });
-    await supabase.from("schedules").delete().match({ userId, band_id });
+    await supabase.from("band_user").delete().match({ user_id, band_id });
+    await supabase.from("schedules").delete().match({ user_id, band_id });
     return true;
   } catch (error) {
     console.error("データベースエラー(removeMember):", error);
