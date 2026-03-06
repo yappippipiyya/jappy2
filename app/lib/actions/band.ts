@@ -1,8 +1,11 @@
 "use server";
 
+import { auth } from '@/auth';
 import { nanoid } from 'nanoid';
 import { createAdminClient } from '@/app/lib/supabase'
 import { Band } from "@/app/lib/types"
+import { fetchUser } from '@/app/lib/services/user';
+import { fetchBands } from '../services/band';
 
 
 const generateToken = () => nanoid(16);
@@ -79,6 +82,17 @@ export async function updateBand(
 
 
 export async function updateBandArchiveStatus(band_id: number, archived: boolean): Promise<boolean> {
+  const session = await auth()
+  const email = session?.user?.email || ""
+  const user = await fetchUser(null, email)
+
+  if (!user) return false;
+
+  const bands = await fetchBands(user.id)
+  const isBandMember = bands.some(b => b.id === band_id)
+
+  if (!isBandMember) return false;
+
   try {
     const supabase = createAdminClient()
 

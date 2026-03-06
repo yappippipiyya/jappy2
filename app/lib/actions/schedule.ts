@@ -6,6 +6,7 @@ import { Schedule, FixedSchedule } from "@/app/lib/types"
 import { fetchUser } from '@/app/lib/services/user';
 import { fetchBands } from '../services/band';
 
+
 export async function updateSchedule(
   user_id: number,
   schedule: Record<string, (0 | 1)[]>,

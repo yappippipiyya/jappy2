@@ -13,7 +13,7 @@ export async function Header(
         <h1 className="m-7 text-2xl font-bold tracking-tight ">
           {band.name}
         </h1>
-        <KebabMenu isCreator={isCreator} isArchived={isArchived} />
+        <KebabMenu bandId={band.id} isCreator={isCreator} isArchived={isArchived} />
       </div>
 
       <div className="text-center">

@@ -2,19 +2,31 @@
 
 import { useState } from "react";
 
-export function KebabMenu({ isCreator, isArchived }: { isCreator: boolean, isArchived: boolean }) {
+import { updateBandArchiveStatus } from "@/app/lib/actions/band";
+import { useRouter } from "next/navigation";
+
+
+export function KebabMenu({ bandId, isCreator, isArchived }: { bandId: number, isCreator: boolean, isArchived: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+
+  const handleArchive = async () => {
+    const success = await updateBandArchiveStatus(bandId, !isArchived);
+    if (success) {
+      router.push("/"); 
+    }
+  };
 
   const menuItems = [
     isArchived
-      ? { icon: "unarchive", text: "アーカイブ解除", color: "text-zinc-700 dark:text-zinc-200" }
-      : { icon: "archive", text: "アーカイブ", color: "text-zinc-700 dark:text-zinc-200" },
+      ? { icon: "unarchive", text: "アーカイブ解除", onClick: handleArchive, color: "text-zinc-700 dark:text-zinc-200" }
+      : { icon: "archive", text: "アーカイブ", onClick: handleArchive, color: "text-zinc-700 dark:text-zinc-200" },
     ...(isCreator
       ? [
-          { icon: "edit", text: "編集する", color: "text-zinc-700 dark:text-zinc-200" },
-          { icon: "delete", text: "削除する", color: "text-red-500" },
+          { icon: "edit", text: "編集する", onClick: () => {}, color: "text-zinc-700 dark:text-zinc-200" },
+          { icon: "delete", text: "削除する", onClick: () => {}, color: "text-red-500" },
         ]
-      : [{ icon: "logout", text: "脱退する", color: "text-yellow-500" }]),
+      : [{ icon: "logout", text: "脱退する", onClick: () => {}, color: "text-yellow-500" }]),
   ];
 
   return (
@@ -35,7 +47,10 @@ export function KebabMenu({ isCreator, isArchived }: { isCreator: boolean, isArc
               <li
                 key={i}
                 className={`flex gap-3 px-4 py-2 text-sm ${item.color} hover:bg-gray-100 cursor-pointer`}
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  item.onClick();
+                  setIsOpen(false);
+                }}
               >
                 <span className="material-icons">{item.icon}</span>
                 {item.text}
