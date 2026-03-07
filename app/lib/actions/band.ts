@@ -64,6 +64,17 @@ export async function updateBand(
   band_id: number,
   updates: Partial<Pick<Band, "name" | "start_date" | "end_date" | "start_time" | "end_time">>
 ): Promise<boolean> {
+  const session = await auth()
+  const email = session?.user?.email || ""
+  const user = await fetchUser(null, email)
+
+  if (!user) return false;
+
+  const bands = await fetchBands(user.id)
+  const isBandCreator = bands?.some(b => b.creator_user_id === user.id && b.id === band_id)
+
+  if (!isBandCreator) return false;
+
   try {
     const supabase = createAdminClient()
 
@@ -170,7 +181,7 @@ export async function deleteBand(band_id: number): Promise<boolean> {
 
   if (!user) return false;
 
-  const bands = await fetchBands(user.id, true);
+  const bands = await fetchBands(user.id);
   const isBandCreator = bands?.some(b => b.creator_user_id === user.id && b.id === band_id)
 
   if (!isBandCreator) return false;
