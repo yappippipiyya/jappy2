@@ -5,8 +5,6 @@ import { KebabMenu } from "./kebabMenu";
 export async function Header(
   { band, isCreator, isArchived }: { band: Band, isCreator: boolean, isArchived: boolean }
 ) {
-  const formatTime = (timeStr: string | null) => timeStr?.slice(0, 5) || "";
-
   return (
     <div className="">
       <div className="relative flex justify-center items-center">
@@ -23,7 +21,7 @@ export async function Header(
         </div>
         <div>
           <span className="font-bold">時間：</span>
-          {formatTime(band.start_time)} ～ {formatTime(band.end_time)}
+          {`${Number(band.start_time?.slice(0, 2))}:00`} ～ {`${Number(band.end_time?.slice(0, 2))+1}:00`}
         </div>
       </div>
 

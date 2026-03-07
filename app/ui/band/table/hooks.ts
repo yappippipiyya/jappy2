@@ -13,7 +13,7 @@ export function useScheduleMatrix(band: Band, schedules: Schedule[]) {
 
     const startHour = Number(band.start_time.slice(0, 2));
     const endHour = Number(band.end_time.slice(0, 2));
-    const hoursArray = Array.from({ length: endHour - startHour }, (_, i) => startHour + i);
+    const hoursArray = Array.from({ length: endHour - startHour + 1 }, (_, i) => startHour + i);
 
     const matrix: ScheduleMatrix = {};
     schedules.forEach((s) => {
