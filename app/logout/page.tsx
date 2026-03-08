@@ -2,24 +2,23 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Swal from "sweetalert2";
 
 import { handleSignOut } from "@/app/lib/actions/handleSignOut";
 import Navber from "@/app/ui/navber";
 import Footer from "@/app/ui/footer";
+import { useAlert } from "@/app/ui/CustomAlert"
+
 
 export default function LogoutPage() {
   const router = useRouter();
+  const { fire } = useAlert();
 
   useEffect(() => {
     const showModal = async () => {
-      const result = await Swal.fire({
+      const result = await fire({
         title: "ログアウトしてよろしいですか？",
-        icon: "info",
-        theme: "auto",
-        showCancelButton: true,
-        confirmButtonText: "ログアウト",
-        cancelButtonText: "キャンセル",
+        confirmText: "ログアウト",
+        cancelText: "キャンセル",
       });
       if (result.isConfirmed) {
         handleSignOut();

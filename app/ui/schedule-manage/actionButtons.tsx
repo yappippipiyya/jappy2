@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import Swal from 'sweetalert2';
 
 import { User, Schedule, FixedSchedule } from "@/app/lib/types";
 import { updateSchedule } from "@/app/lib/actions/schedule";
+import { useAlert } from "@/app/ui/CustomAlert"
 
 
 export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fixedSchedules, onScheduleUpdate }: {
@@ -20,6 +20,8 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
   const [fixedEndDate, setFixedEndDate] = useState("")
   const [applyingFixed, setApplyingFixed] = useState(false)
 
+  const { fire } = useAlert();
+
   // --- デフォルトを適用 ---
   const handleApplyDefault = async () => {
     if (isDefault || applying) return;
@@ -33,13 +35,10 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
       return;
     }
 
-    const result = await Swal.fire({
-      text: `デフォルトのスケジュールを「${bandNameMap[selectedBandId]}」に適用しますか？現在の設定は上書きされます。`,
-      icon: "info",
-      showCancelButton: true,
-      theme: "auto",
-      confirmButtonText: "適用する",
-      cancelButtonText: "キャンセル",
+    const result = await fire({
+      title: `デフォルトのスケジュールを「${bandNameMap[selectedBandId]}」に適用しますか？現在の設定は上書きされます。`,
+      confirmText: "適用する",
+      cancelText: "キャンセル",
     });
 
     if (!result.isConfirmed) return;
@@ -104,13 +103,10 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
       });
     });
 
-    const result = await Swal.fire({
-      text: `「${bandNameMap[selectedBandId]}」のスケジュールから、他のバンド練が入っている時間帯のチェックを外しますか？`,
-      icon: "info",
-      showCancelButton: true,
-      theme: "auto",
-      confirmButtonText: "外す",
-      cancelButtonText: "キャンセル",
+    const result = await fire({
+      title: `「${bandNameMap[selectedBandId]}」のスケジュールから、他のバンド練が入っている時間帯のチェックを外しますか？`,
+      confirmText: "外す",
+      cancelText: "キャンセル",
     });
 
     if (!result.isConfirmed) return;

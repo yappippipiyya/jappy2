@@ -1,27 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import Swal from 'sweetalert2';
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 import { updateBandArchiveStatus, leaveBand, deleteBand } from "@/app/lib/actions/band";
 import { Band } from "@/app/lib/types";
+import { useAlert } from "@/app/ui/CustomAlert"
 
 
 export function KebabMenu({ band, isCreator, isArchived }: { band: Band, isCreator: boolean, isArchived: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const { fire } = useAlert();
 
   const handleArchive = async () => {
     if (!isArchived) {
-      const result = await Swal.fire({
+      const result = await fire({
         title: "本当にアーカイブしますか？",
-        icon: "info",
-        theme: "auto",
-        showCancelButton: true,
-        confirmButtonText: "アーカイブする",
-        cancelButtonText: "キャンセル",
+        confirmText: "アーカイブする",
+        cancelText: "キャンセル",
       });
 
       if (!result.isConfirmed) return;
@@ -37,15 +35,12 @@ export function KebabMenu({ band, isCreator, isArchived }: { band: Band, isCreat
   };
 
   const deleteTheBand = async () => {
-    const result = await Swal.fire({
+    const result = await fire({
       title: "本当に削除しますか？",
       text: "この操作は取り消せません！",
-      icon: "warning",
-      theme: "auto",
-      showCancelButton: true,
-      confirmButtonColor: "#ff3434",
-      confirmButtonText: "削除する",
-      cancelButtonText: "キャンセル",
+      confirmColor: "#ff3434",
+      confirmText: "削除する",
+      cancelText: "キャンセル",
     });
 
     if (result.isConfirmed) {
@@ -58,14 +53,11 @@ export function KebabMenu({ band, isCreator, isArchived }: { band: Band, isCreat
   }
 
   const leaveTheBand = async () => {
-    const result = await Swal.fire({
+    const result = await fire({
       title: "本当に脱退しますか？",
-      icon: "question",
-      showCancelButton: true,
-      theme: "auto",
-      confirmButtonColor: "#f97316",
-      confirmButtonText: "脱退する",
-      cancelButtonText: "キャンセル",
+      confirmColor: "#f97316",
+      confirmText: "脱退する",
+      cancelText: "キャンセル",
     });
 
     if (result.isConfirmed) {
