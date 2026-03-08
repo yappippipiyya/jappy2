@@ -18,13 +18,10 @@ export function KebabMenu({ band, isCreator, isArchived }: { band: Band, isCreat
       const result = await Swal.fire({
         title: "本当にアーカイブしますか？",
         icon: "info",
+        theme: "auto",
         showCancelButton: true,
-        confirmButtonColor: "#3b82f6",
-        cancelButtonColor: "#71717a",
         confirmButtonText: "アーカイブする",
         cancelButtonText: "キャンセル",
-        background: document.documentElement.classList.contains('dark') ? '#18181b' : '#fff',
-        color: document.documentElement.classList.contains('dark') ? '#fafafa' : '#18181b',
       });
 
       if (!result.isConfirmed) return;
@@ -44,13 +41,11 @@ export function KebabMenu({ band, isCreator, isArchived }: { band: Band, isCreat
       title: "本当に削除しますか？",
       text: "この操作は取り消せません！",
       icon: "warning",
+      theme: "auto",
       showCancelButton: true,
-      confirmButtonColor: "#ef4444",
-      cancelButtonColor: "#71717a",
+      confirmButtonColor: "#ff3434",
       confirmButtonText: "削除する",
       cancelButtonText: "キャンセル",
-      background: document.documentElement.classList.contains('dark') ? '#18181b' : '#fff',
-      color: document.documentElement.classList.contains('dark') ? '#fafafa' : '#18181b',
     });
 
     if (result.isConfirmed) {
@@ -67,12 +62,10 @@ export function KebabMenu({ band, isCreator, isArchived }: { band: Band, isCreat
       title: "本当に脱退しますか？",
       icon: "question",
       showCancelButton: true,
+      theme: "auto",
       confirmButtonColor: "#f97316",
-      cancelButtonColor: "#71717a",
       confirmButtonText: "脱退する",
       cancelButtonText: "キャンセル",
-      background: document.documentElement.classList.contains('dark') ? '#18181b' : '#fff',
-      color: document.documentElement.classList.contains('dark') ? '#fafafa' : '#18181b',
     });
 
     if (result.isConfirmed) {
