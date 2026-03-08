@@ -103,7 +103,7 @@ export function KebabMenu({ band, isCreator, isArchived }: { band: Band, isCreat
         <>
           <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)}></div>
 
-          <ul className="absolute right-0 mt-2 w-48 bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-700 rounded-md shadow-lg z-20 py-1">
+          <ul className="absolute right-0 mt-2 w-48 bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-700 rounded-xl shadow-lg z-20 py-1">
             {menuItems.map((item, i) => (
               <li
                 key={i}
