@@ -11,20 +11,21 @@ export default function AccountForm({ user }: { user: User }) {
   const [isPending, setIsPending] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-      const formData = new FormData(event.currentTarget);
-      const name = formData.get("name") as string;
+    event.preventDefault();
 
-      setIsPending(true);
+    const formData = new FormData(event.currentTarget);
+    const name = formData.get("name") as string;
 
-      const res = await updateAccount(name);
+    setIsPending(true);
 
-      if (res) {
-        router.refresh();
-        router.push(`/`);
-      } else {
-        alert("更新に失敗しました");
-        setIsPending(false);
+    const res = await updateAccount(name);
+
+    if (res) {
+      router.refresh();
+    } else {
+      alert("更新に失敗しました");
     }
+    setIsPending(false)
   }
 
   return (
@@ -41,7 +42,6 @@ export default function AccountForm({ user }: { user: User }) {
           defaultValue={user.name || ""}
           className="w-full px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent focus:ring-2 focus:ring-zinc-500 outline-none transition-all"
           required
-          autoComplete="name"
         />
       </div>
 
