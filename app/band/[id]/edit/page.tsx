@@ -46,7 +46,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 
         {/* バンド作成フォームセクション */}
         <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-6 shadow-sm">
-          <CreateEditForm userId={user.id} band={band}/>
+          <CreateEditForm band={band}/>
         </div>
       </div>
       <Footer />

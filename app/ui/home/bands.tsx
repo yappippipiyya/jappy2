@@ -3,6 +3,7 @@ import Link from "next/link"
 import CopyButton from "./copyButton"
 import { Band } from "@/app/lib/types"
 
+
 export async function Bands({ bands }: { bands: Band[] }) {
   const bandsWithUsers = await Promise.all(
     bands.map(async (b) => {
@@ -14,7 +15,6 @@ export async function Bands({ bands }: { bands: Band[] }) {
   return (
     <div className="flex flex-col gap-4 p-5 max-w-2xl mx-auto -mt-2">
       {bandsWithUsers.map((b) => {
-        // アーカイブ済みは少し透過させ、背景を馴染ませる
         const cardStyles = b.archived
           ? "bg-zinc-200 dark:bg-zinc-950/50 border-zinc-100 dark:border-zinc-800 opacity-70"
           : "bg-white dark:bg-zinc-900 border-zinc-100 dark:border-zinc-800 shadow-sm"

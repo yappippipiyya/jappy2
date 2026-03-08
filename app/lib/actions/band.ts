@@ -16,9 +16,16 @@ export async function createBand(
   start_date: string,
   end_date: string,
   start_time: string,
-  end_time: string,
-  creator_user_id: number
+  end_time: string
 ): Promise<{ id: number; token: string } | null> {
+  const session = await auth()
+  const email = session?.user?.email || ""
+  const user = await fetchUser(null, email)
+
+  if (!user) return null;
+
+  const creator_user_id = user.id
+
   const token = generateToken();
 
   try {

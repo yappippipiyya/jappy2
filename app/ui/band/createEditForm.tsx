@@ -6,7 +6,7 @@ import { createBand, updateBand } from "@/app/lib/actions/band";
 import { Band } from "@/app/lib/types";
 
 
-export default function CreateEditForm({ userId, band }: { userId: number, band: Band | null }) {
+export default function CreateEditForm({ band }: { band: Band | null }) {
   const router = useRouter();
   const [isPending, setIsPending] = useState(false);
 
@@ -51,7 +51,7 @@ export default function CreateEditForm({ userId, band }: { userId: number, band:
       }
 
     } else {
-      const res = await createBand(name, startDate, endDate, startTime, endTime, userId)
+      const res = await createBand(name, startDate, endDate, startTime, endTime)
       if (res) {
         router.refresh();
         router.push(`/band/${res.token}`);
