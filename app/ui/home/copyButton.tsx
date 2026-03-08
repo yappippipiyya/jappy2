@@ -4,9 +4,9 @@ import { useState } from "react";
 
 export default function CopyButton({ token }: { token: string }) {
   const [copied, setCopied] = useState(false);
-  const fullURL = `${window.location.origin}/band/${token}/join?openExternalBrowser=1`;
 
   const handleCopy = async () => {
+    const fullURL = `${window.location.origin}/band/${token}/join?openExternalBrowser=1`;
     try {
       await navigator.clipboard.writeText(fullURL);
       setCopied(true);
