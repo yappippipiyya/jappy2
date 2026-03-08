@@ -1,9 +1,10 @@
 import { useRef } from "react";
 import { Band, Schedule, User } from "@/app/lib/types";
 import { useScheduleMatrix, useScheduleSave, useTableTooltip, useTableScroll } from "./hooks";
-import { TableStatus } from "./TableStatus";
-import { TableTooltip } from "./TableTooltip";
+import { TableStatus } from "@/app/ui/table/status";
+import { TableTooltip } from "@/app/ui/table/tooltip";
 import { TableCell } from "./TableCell";
+
 
 export function Table({ user, selectedBandId, band, bands, schedules, bandMap, onScheduleUpdate }: { user: User, selectedBandId: number; band: Partial<Band>; bands: Band[]; schedules: Schedule[]; bandMap: Record<number, string>; onScheduleUpdate: (s: Schedule) => void }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -18,9 +19,9 @@ export function Table({ user, selectedBandId, band, bands, schedules, bandMap, o
       const cellId = `${dateKey}-${hour}`;
       return checkedStates[cellId] ?? (scheduleMatrix[dateKey]?.[hour]?.isAvailable || false);
     });
-    
+
     const newState = !allSelected;
-    
+
     setCheckedStates(prev => {
       const next = { ...prev };
       hours.forEach(hour => {

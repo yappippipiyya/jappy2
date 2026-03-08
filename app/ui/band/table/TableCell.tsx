@@ -21,6 +21,7 @@ const BG_COLORS =[
   "bg-sky-500 dark:bg-sky-100",
 ];
 
+
 export function TableCell({ mode, cellId, cellData, isPractice, userMap, onCheckChange, onInteract, onLeave }: TableCellProps) {
   const memberIds = cellData?.memberIds ??[];
   const memberCount = memberIds.length;

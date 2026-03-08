@@ -1,8 +1,8 @@
 import { useMemo, useRef } from "react";
 import { Band, Schedule, User } from "@/app/lib/types";
 import { useScheduleMatrix, useScheduleSave, useTableTooltip, useTableScroll } from "./hooks";
-import { TableStatus } from "./TableStatus";
-import { TableTooltip } from "./TableTooltip";
+import { TableStatus } from "@/app/ui/table/status";
+import { TableTooltip } from "@/app/ui/table/tooltip";
 import { TableCell } from "./TableCell";
 
 

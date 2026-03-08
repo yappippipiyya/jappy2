@@ -1,6 +1,6 @@
 import { CellData } from "./types";
 
-interface TableCellProps {
+type TableCellProps = {
   cellId: string;
   cellData?: CellData;
   selectedBandId: number;
@@ -10,6 +10,7 @@ interface TableCellProps {
   onInteract: (e: React.MouseEvent | React.TouchEvent, text: string) => void;
   onLeave: () => void;
 }
+
 
 export function TableCell({ cellId, cellData, selectedBandId, isAvailable, bandMap, onCheckChange, onInteract, onLeave }: TableCellProps) {
   const bandIds = cellData?.practiceBandIds ?? [];

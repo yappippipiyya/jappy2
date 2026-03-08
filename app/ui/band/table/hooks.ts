@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo, useRef, RefObject } from "react";
 import { Band, Schedule } from "@/app/lib/types";
 import { updateSchedule } from "@/app/lib/actions/schedule";
-import { SaveStatus, ScheduleMatrix, DateListItem, TooltipState } from "./types";
-
+import { SaveStatus, DateListItem, TooltipState } from "@/app/ui/table/types"
+import { ScheduleMatrix } from "./types";
 
 // 1. スケジュールデータをマトリクスに変換するフック
 export function useScheduleMatrix(band: Band, schedules: Schedule[]) {
