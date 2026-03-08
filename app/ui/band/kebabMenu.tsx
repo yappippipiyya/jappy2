@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Swal from 'sweetalert2';
 
 import { updateBandArchiveStatus, leaveBand, deleteBand } from "@/app/lib/actions/band";
 import { useRouter } from "next/navigation";
@@ -12,23 +13,68 @@ export function KebabMenu({ band, isCreator, isArchived }: { band: Band, isCreat
   const router = useRouter();
 
   const handleArchive = async () => {
+    if (!isArchived) {
+      const result = await Swal.fire({
+        title: "本当にアーカイブしますか？",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#3b82f6",
+        cancelButtonColor: "#71717a",
+        confirmButtonText: "アーカイブする",
+        cancelButtonText: "キャンセル",
+        background: document.documentElement.classList.contains('dark') ? '#18181b' : '#fff',
+        color: document.documentElement.classList.contains('dark') ? '#fafafa' : '#18181b',
+      });
+
+      if (!result.isConfirmed) return;
+    }
+
     const success = await updateBandArchiveStatus(band.id, !isArchived);
     if (success) {
-      router.push("/");
+      router.refresh();
     }
   };
 
   const deleteTheBand = async () => {
-    const success = await deleteBand(band.id);
-    if (success) {
-      router.push("/")
+    const result = await Swal.fire({
+      title: "本当に削除しますか？",
+      text: "この操作は取り消せません！",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ef4444",
+      cancelButtonColor: "#71717a",
+      confirmButtonText: "削除する",
+      cancelButtonText: "キャンセル",
+      background: document.documentElement.classList.contains('dark') ? '#18181b' : '#fff',
+      color: document.documentElement.classList.contains('dark') ? '#fafafa' : '#18181b',
+    });
+
+    if (result.isConfirmed) {
+      const success = await deleteBand(band.id);
+      if (success) {
+        router.push("/")
+      }
     }
   }
 
   const leaveTheBand = async () => {
-    const success = await leaveBand(band.id);
-    if (success) {
-      router.push("/");
+    const result = await Swal.fire({
+      title: "本当に脱退しますか？",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#f97316",
+      cancelButtonColor: "#71717a",
+      confirmButtonText: "脱退する",
+      cancelButtonText: "キャンセル",
+      background: document.documentElement.classList.contains('dark') ? '#18181b' : '#fff',
+      color: document.documentElement.classList.contains('dark') ? '#fafafa' : '#18181b',
+    });
+
+    if (result.isConfirmed) {
+      const success = await leaveBand(band.id);
+      if (success) {
+        router.push("/");
+      }
     }
   }
 

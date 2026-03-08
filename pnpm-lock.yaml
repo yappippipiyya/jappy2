@@ -32,6 +32,12 @@ importers:
       react-icons:
         specifier: ^5.5.0
         version: 5.5.0(react@18.3.1)
+      sweetalert2:
+        specifier: ^11.26.21
+        version: 11.26.21
+      sweetalert2-react-content:
+        specifier: ^5.1.1
+        version: 5.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sweetalert2@11.26.21)
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.2.1
@@ -2036,6 +2042,16 @@ packages:
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  sweetalert2-react-content@5.1.1:
+    resolution: {integrity: sha512-JR1DWKQVCSy87q2gNGv5pZgG4TK/x1X61N/HbvDdKmnkCWCSSulG7JfFR8qSB32+H+6nvonsIcevZD7mzRpF0A==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+      sweetalert2: ^11.0.0
+
+  sweetalert2@11.26.21:
+    resolution: {integrity: sha512-apfAIHg5DOOnPqUIJc+aAsDplpfHliAnVl7zqLfhQiWaYDew46pg4ZZMLJhbVbjdOdMV+PKG5ulkKzNqvcSViQ==}
 
   tailwindcss@4.2.1:
     resolution: {integrity: sha512-/tBrSQ36vCleJkAOsy9kbNTgaxvGbyOamC30PRePTQe/o1MFwEKHQk4Cn7BNGaPtjp+PuUrByJehM1hgxfq4sw==}
@@ -4287,6 +4303,14 @@ snapshots:
       has-flag: 4.0.0
 
   supports-preserve-symlinks-flag@1.0.0: {}
+
+  sweetalert2-react-content@5.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sweetalert2@11.26.21):
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      sweetalert2: 11.26.21
+
+  sweetalert2@11.26.21: {}
 
   tailwindcss@4.2.1: {}
 

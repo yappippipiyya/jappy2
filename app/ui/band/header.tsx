@@ -8,9 +8,16 @@ export async function Header(
   return (
     <div className="">
       <div className="relative flex justify-center items-center">
-        <h1 className="m-7 text-2xl font-bold tracking-tight ">
-          {band.name}
-        </h1>
+        <div className="m-7 flex items-center gap-2">
+          <h1 className="text-2xl font-bold tracking-tight ">
+            {band.name}
+          </h1>
+          {band.archived && (
+            <span className="shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-500 border border-zinc-200 dark:border-zinc-700">
+            ARCHIVED
+            </span>
+          )}
+        </div>
         <KebabMenu band={band} isCreator={isCreator} isArchived={isArchived} />
       </div>
 
