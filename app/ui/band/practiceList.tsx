@@ -1,5 +1,7 @@
 "use client";
 
+import { toast } from "sonner";
+
 import { Band, Schedule } from "@/app/lib/types";
 
 
@@ -60,7 +62,7 @@ export function PracticeList({ band, schedules }: { band: Band; schedules: Sched
 
   const handleCopy = () => {
     navigator.clipboard.writeText(fullText).then(() => {
-      alert("コピーしました");
+      toast.success("コピーしました！")
     }).catch(err => {
       console.error('Failed to copy text: ', err);
     });

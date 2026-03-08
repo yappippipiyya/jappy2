@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import Swal from 'sweetalert2';
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 import { updateBandArchiveStatus, leaveBand, deleteBand } from "@/app/lib/actions/band";
-import { useRouter } from "next/navigation";
 import { Band } from "@/app/lib/types";
 
 
@@ -32,6 +33,9 @@ export function KebabMenu({ band, isCreator, isArchived }: { band: Band, isCreat
     const success = await updateBandArchiveStatus(band.id, !isArchived);
     if (success) {
       router.refresh();
+      !isArchived
+        ? toast.success("バンドをアーカイブしました。")
+        : toast.success("バンドのアーカイブを解除しました。")
     }
   };
 
@@ -53,6 +57,7 @@ export function KebabMenu({ band, isCreator, isArchived }: { band: Band, isCreat
       const success = await deleteBand(band.id);
       if (success) {
         router.push("/")
+        toast.success("バンドを削除しました。")
       }
     }
   }
@@ -74,6 +79,7 @@ export function KebabMenu({ band, isCreator, isArchived }: { band: Band, isCreat
       const success = await leaveBand(band.id);
       if (success) {
         router.push("/");
+        toast.success("バンドから脱退しました。")
       }
     }
   }

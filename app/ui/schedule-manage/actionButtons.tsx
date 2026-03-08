@@ -1,8 +1,12 @@
 "use client";
 
+import { useState } from "react";
+import { toast } from "sonner";
+import Swal from 'sweetalert2';
+
 import { User, Schedule, FixedSchedule } from "@/app/lib/types";
 import { updateSchedule } from "@/app/lib/actions/schedule";
-import { useState } from "react";
+
 
 export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fixedSchedules, onScheduleUpdate }: {
   user: User, selectedBandId: number, bandNameMap: Record<number, string>, schedules: Schedule[], fixedSchedules: FixedSchedule[], onScheduleUpdate: (s: Schedule) => void
@@ -25,14 +29,20 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
     );
 
     if (!defaultSchedule || !defaultSchedule.schedule) {
-      alert("デフォルトスケジュールが見つかりません");
+      toast.error("デフォルトスケジュールが見つかりません");
       return;
     }
 
-    const confirmed = confirm(
-      `デフォルトのスケジュールを「${bandNameMap[selectedBandId]}」に適用しますか？\n現在の設定は上書きされます。`
-    );
-    if (!confirmed) return;
+    const result = await Swal.fire({
+      text: `デフォルトのスケジュールを「${bandNameMap[selectedBandId]}」に適用しますか？現在の設定は上書きされます。`,
+      icon: "info",
+      showCancelButton: true,
+      theme: "auto",
+      confirmButtonText: "適用する",
+      cancelButtonText: "キャンセル",
+    });
+
+    if (!result.isConfirmed) return;
 
     setApplying(true);
     try {
@@ -44,11 +54,12 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
       );
       if (result) {
         onScheduleUpdate(result);
+        toast.success("デフォルトを適用しました。")
       } else {
-        alert("適用に失敗しました");
+        toast.error("適用に失敗しました。")
       }
     } catch {
-      alert("適用中にエラーが発生しました");
+      toast.error("適用に失敗しました。")
     } finally {
       setApplying(false);
     }
@@ -69,7 +80,7 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
     const baseScheduleData = (currentBandSchedule?.schedule || defaultSchedule?.schedule) as Record<string, number[]> | undefined;
 
     if (!baseScheduleData) {
-      alert("スケジュールデータが見つかりません");
+      toast.info("スケジュールデータが見つかりません");
       return;
     }
 
@@ -78,7 +89,7 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
     );
 
     if (otherBandPractices.length === 0) {
-      alert("他のバンド練の予定はありません");
+      toast.info("他のバンド練の予定はありません");
       return;
     }
 
@@ -93,10 +104,16 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
       });
     });
 
-    const confirmed = confirm(
-      `「${bandNameMap[selectedBandId]}」のスケジュールから、他のバンド練が入っている時間帯のチェックを外しますか？`
-    );
-    if (!confirmed) return;
+    const result = await Swal.fire({
+      text: `「${bandNameMap[selectedBandId]}」のスケジュールから、他のバンド練が入っている時間帯のチェックを外しますか？`,
+      icon: "info",
+      showCancelButton: true,
+      theme: "auto",
+      confirmButtonText: "外す",
+      cancelButtonText: "キャンセル",
+    });
+
+    if (!result.isConfirmed) return;
 
     setRemovingOther(true);
     try {
@@ -112,10 +129,10 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
       if (result) {
         onScheduleUpdate(result);
       } else {
-        alert("更新に失敗しました");
+        toast.error("更新に失敗しました");
       }
     } catch {
-      alert("更新中にエラーが発生しました");
+      toast.error("更新中にエラーが発生しました");
     } finally {
       setRemovingOther(false);
     }
@@ -126,17 +143,17 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
     if (!isDefault || applyingFixed) return;
 
     if (!fixedStartDate || !fixedEndDate) {
-      alert("開始日と終了日を選択してください");
+      toast.info("開始日と終了日を選択してください");
       return;
     }
     if (fixedStartDate > fixedEndDate) {
-      alert("開始日は終了日より前に設定してください");
+      toast.info("開始日は終了日より前に設定してください");
       return;
     }
 
     const fixedSchedule = fixedSchedules[0];
     if (!fixedSchedule || !fixedSchedule.schedule) {
-      alert("固定スケジュールが登録されていません");
+      toast.warning("固定スケジュールが登録されていません");
       return;
     }
 
@@ -179,10 +196,10 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
         setFixedStartDate("");
         setFixedEndDate("");
       } else {
-        alert("適用に失敗しました");
+        toast.error("適用に失敗しました");
       }
     } catch {
-      alert("適用中にエラーが発生しました");
+      toast.error("適用中にエラーが発生しました");
     } finally {
       setApplyingFixed(false);
     }

@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+
 import { createBand, updateBand } from "@/app/lib/actions/band";
 import { Band } from "@/app/lib/types";
 
@@ -23,12 +25,12 @@ export default function bandForm({ band }: { band: Band | null }) {
     const endTime = formData.get("end_time") as string;
 
     if (startDate >= endDate) {
-      alert("開始日は終了日より前の日付にしてください。");
+      toast.info("開始日は終了日より前の日付にしてください。");
       return
     }
 
     if (startTime >= endTime) {
-      alert("開始時間は終了時間より前の時刻にしてください。");
+      toast.info("開始時間は終了時間より前の時刻にしてください。");
       return;
     }
 
@@ -45,8 +47,9 @@ export default function bandForm({ band }: { band: Band | null }) {
       if (res) {
         router.refresh();
         router.push(`/band/${band.token}`);
+        toast.success("更新が完了しました。")
       } else {
-        alert("更新に失敗しました");
+        toast.error("更新に失敗しました。");
         setIsPending(false);
       }
 
@@ -55,8 +58,9 @@ export default function bandForm({ band }: { band: Band | null }) {
       if (res) {
         router.refresh();
         router.push(`/band/${res.token}`);
+        toast.success(`${name}を作成しました！`)
       } else {
-        alert("作成に失敗しました");
+        toast.error("作成に失敗しました");
         setIsPending(false);
       }
     }
