@@ -6,7 +6,7 @@ import { fetchUser } from "@/app/lib/services/user";
 
 import Navber from "@/app/ui/navber"
 import Footer from "@/app/ui/footer"
-import CreateEditForm from "@/app/ui/band/createEditForm";
+import BandForm from "@/app/ui/band/bandForm";
 
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
@@ -26,7 +26,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 
 
   return (
-  <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <Navber />
 
       <div className="max-w-2xl mx-auto pb-20 pt-8 px-5">
@@ -46,7 +46,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 
         {/* バンド作成フォームセクション */}
         <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-6 shadow-sm">
-          <CreateEditForm band={band}/>
+          <BandForm band={band}/>
         </div>
       </div>
       <Footer />

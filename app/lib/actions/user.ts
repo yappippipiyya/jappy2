@@ -1,12 +1,14 @@
 "use server";
 
+import { auth } from '@/auth';
+
 import { createAdminClient } from '@/app/lib/supabase'
+import { fetchUser } from '@/app/lib/services/user';
 
 
-export async function addUser(
-  email: string,
-  name: string
-): Promise<number | null> {
+export async function addAccount(name: string): Promise<number | null> {
+  const session = await auth();
+  const email = session?.user?.email || "";
 
   try {
     const supabase = createAdminClient()
@@ -31,27 +33,27 @@ export async function addUser(
 }
 
 
-export async function updateUser(
-  user_id: number,
-  email: string,
-  name: string
-): Promise<boolean> {
+export async function updateAccount(name: string): Promise<boolean> {
+  const session = await auth();
+  const email = session?.user?.email || "";
+  const user = await fetchUser(null, email);
+
+  if (!user) return false;
 
   try {
     const supabase = createAdminClient()
 
     const { error, data } = await supabase.from("users")
       .update({
-        email: email,
         name: name
       })
-      .eq("id", user_id)
+      .eq("id", user.id)
       .select("id")
       .single()
 
     if ( error ) throw error;
 
-    return !!data
+    return true
 
   } catch (error) {
     console.error("データベースエラー(update):", error)
@@ -60,13 +62,19 @@ export async function updateUser(
 }
 
 
-export async function deleteUser(user_id: number): Promise<boolean> {
+export async function deleteAccount(): Promise<boolean> {
+  const session = await auth();
+  const email = session?.user?.email || "";
+  const user = await fetchUser(null, email);
+
+  if (!user) return false;
+
   try {
     const supabase = createAdminClient()
 
     const { error, count } = await supabase.from("users")
       .delete({ count: 'exact' })
-      .eq("id", user_id)
+      .eq("id", user.id)
 
     if ( error ) throw error;
 

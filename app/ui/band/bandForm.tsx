@@ -6,7 +6,7 @@ import { createBand, updateBand } from "@/app/lib/actions/band";
 import { Band } from "@/app/lib/types";
 
 
-export default function CreateEditForm({ band }: { band: Band | null }) {
+export default function bandForm({ band }: { band: Band | null }) {
   const router = useRouter();
   const [isPending, setIsPending] = useState(false);
 

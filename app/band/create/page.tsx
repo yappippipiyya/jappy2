@@ -5,7 +5,7 @@ import { fetchUser } from "@/app/lib/services/user";
 import { redirect } from "next/navigation";
 import Navber from "@/app/ui/navber";
 import Footer from "@/app/ui/footer";
-import CreateEditForm from "@/app/ui/band/createEditForm";
+import bandForm from "@/app/ui/band/bandForm";
 
 
 export default async function CreateBandPage() {
@@ -36,7 +36,7 @@ export default async function CreateBandPage() {
 
         {/* バンド作成フォームセクション */}
         <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-6 shadow-sm">
-          <CreateEditForm band={null}/>
+          <bandForm band={null}/>
         </div>
       </div>
       <Footer />

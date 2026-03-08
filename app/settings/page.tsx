@@ -7,7 +7,6 @@ export default async function Page() {
     {
       title: "ツール",
       content: [
-        { name: "テーマ", icon: "palette", href: "/settings/theme", style: "" },
         { name: "固定スケジュール", icon: "calendar_today", href: "/settings/fixed-schedule", style: "" }
       ]
     },
