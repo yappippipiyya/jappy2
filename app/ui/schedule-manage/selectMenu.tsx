@@ -15,10 +15,10 @@ export function SelectMenu({ selectedBandId, setSelectedBandId, bandNameMap }: {
             </option>
           ))}
         </select>
-        <span className="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500 text-[20px] pointer-events-none">
+        <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500 text-[20px] pointer-events-none">
           tune
         </span>
-        <span className="material-icons absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500 text-[18px] pointer-events-none">
+        <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500 text-[18px] pointer-events-none">
           expand_more
         </span>
       </div>

@@ -40,7 +40,7 @@ export async function Bands({ bands }: { bands: Band[] }) {
 
                 {/* メンバーセクション */}
                 <div className="flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
-                  <span className="material-icons text-base">groups</span>
+                  <span className="material-symbols-outlined text-base">groups</span>
                   <p className="font-medium truncate">
                     {b.users.map((u) => u.name).join(" ・ ")}
                   </p>
@@ -55,7 +55,7 @@ export async function Bands({ bands }: { bands: Band[] }) {
                   <CopyButton token={b.token || ""} />
                 </div>
               )}
-              <span className="material-icons text-zinc-300 dark:text-zinc-700">chevron_right</span>
+              <span className="material-symbols-outlined text-zinc-300 dark:text-zinc-700">chevron_right</span>
             </div>
           </div>
         )

@@ -73,14 +73,14 @@ export function PracticeList({ band, schedules }: { band: Band; schedules: Sched
       <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-6 pb-6 pt-4 shadow-sm">
         <div className="flex items-center justify-between mb-3 pb-3 border-b border-zinc-100 dark:border-zinc-800">
           <h2 className="text-lg font-bold text-zinc-800 dark:text-zinc-100 flex items-center gap-2">
-            <span className="material-icons text-[20px] text-zinc-500">event_available</span>
+            <span className="material-symbols-outlined text-[20px] text-zinc-500">event_available</span>
             {headerText}
           </h2>
           <button
             onClick={handleCopy}
             className="flex items-center px-3 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-lg transition-colors"
           >
-            <span className="material-icons text-[16px]">content_copy</span>
+            <span className="material-symbols-outlined text-[16px]">content_copy</span>
           </button>
         </div>
 

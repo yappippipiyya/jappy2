@@ -28,7 +28,7 @@ export default function Footer() {
               href={item.to}
               className={`w-full p-2.5 text-center transition-colors ${activeColor}`}
             >
-              <span className="material-icons">{item.icon}</span>
+              <span className="material-symbols-outlined">{item.icon}</span>
               <div className="text-xs">{item.desc}</div>
             </Link>
           );

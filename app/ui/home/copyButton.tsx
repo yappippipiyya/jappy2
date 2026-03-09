@@ -21,7 +21,7 @@ export default function CopyButton({ token }: { token: string }) {
         className="flex items-center justify-center w-12 h-12 rounded-full text-zinc-500 hover:bg-indigo-50 dark:hover:bg-zinc-800 transition-colors"
         title="招待リンクをコピー"
       >
-        <span className="material-icons">content_copy</span>
+        <span className="material-symbols-outlined">content_copy</span>
       </button>
     </div>
   );

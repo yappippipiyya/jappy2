@@ -22,7 +22,7 @@ export default async function Page() {
       <main className="grow max-w-2xl mx-auto w-full p-6">
         <div className="flex items-center gap-2 mb-6">
           <Link href="/settings" className="p-2 -ml-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-colors">
-            <span className="material-icons text-zinc-600 dark:text-zinc-300">arrow_back</span>
+            <span className="material-symbols-outlined text-zinc-600 dark:text-zinc-300">arrow_back</span>
           </Link>
           <h1 className="text-3xl font-bold">アカウント設定</h1>
         </div>

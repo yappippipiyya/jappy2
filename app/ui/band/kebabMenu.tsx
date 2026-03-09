@@ -17,9 +17,11 @@ export function KebabMenu({ band, isCreator, isArchived }: { band: Band, isCreat
   const handleArchive = async () => {
     if (!isArchived) {
       const result = await fire({
-        title: "本当にアーカイブしますか？",
-        confirmText: "アーカイブする",
-        cancelText: "キャンセル",
+        title: "アーカイブ",
+        text: "アーカイブしてもよろしいですか？",
+        materialIconName: "archive",
+        confirmText: "アーカイブ",
+        confirmColor: "text-orange-500 border-orange-500"
       });
 
       if (!result.isConfirmed) return;
@@ -36,11 +38,12 @@ export function KebabMenu({ band, isCreator, isArchived }: { band: Band, isCreat
 
   const deleteTheBand = async () => {
     const result = await fire({
-      title: "本当に削除しますか？",
-      text: "この操作は取り消せません！",
-      confirmColor: "#ff3434",
-      confirmText: "削除する",
-      cancelText: "キャンセル",
+      title: "削除",
+      text: "削除してもよろしいですか？",
+      description: "この操作は取り消せません。",
+      materialIconName: "delete",
+      confirmText: "削除",
+      confirmColor: "text-red-500 border-red-500"
     });
 
     if (result.isConfirmed) {
@@ -54,10 +57,11 @@ export function KebabMenu({ band, isCreator, isArchived }: { band: Band, isCreat
 
   const leaveTheBand = async () => {
     const result = await fire({
-      title: "本当に脱退しますか？",
-      confirmColor: "#f97316",
-      confirmText: "脱退する",
-      cancelText: "キャンセル",
+      title: "脱退",
+      text: "脱退してもよろしいですか？",
+      materialIconName: "move_item",
+      confirmColor: "text-orange-500 border-orange-500",
+      confirmText: "脱退",
     });
 
     if (result.isConfirmed) {
@@ -87,7 +91,7 @@ export function KebabMenu({ band, isCreator, isArchived }: { band: Band, isCreat
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center justify-center p-2 w-10 h-10 rounded-full bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 hover:shadow-md transition-shadow"
       >
-        <span className="material-icons text-yellow-400">more_horiz</span>
+        <span className="material-symbols-outlined text-yellow-400">more_horiz</span>
       </button>
 
       {isOpen && (
@@ -104,7 +108,7 @@ export function KebabMenu({ band, isCreator, isArchived }: { band: Band, isCreat
                   setIsOpen(false);
                 }}
               >
-                <span className="material-icons">{item.icon}</span>
+                <span className="material-symbols-outlined">{item.icon}</span>
                 {item.text}
               </li>
             ))}

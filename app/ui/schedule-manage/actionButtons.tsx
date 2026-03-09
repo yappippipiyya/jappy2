@@ -36,9 +36,12 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
     }
 
     const result = await fire({
-      title: `デフォルトのスケジュールを「${bandNameMap[selectedBandId]}」に適用しますか？現在の設定は上書きされます。`,
+      title: "デフォルトを適用",
+      text: `デフォルトのスケジュールを「${bandNameMap[selectedBandId]}」に適用しますか？`,
+      description: "現在の設定は上書きされます。",
       confirmText: "適用する",
-      cancelText: "キャンセル",
+      materialIconName: "auto_fix_high",
+      confirmColor: "text-blue-500 border-blue-500"
     });
 
     if (!result.isConfirmed) return;
@@ -104,9 +107,11 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
     });
 
     const result = await fire({
-      title: `「${bandNameMap[selectedBandId]}」のスケジュールから、他のバンド練が入っている時間帯のチェックを外しますか？`,
+      title: "他のバンド練のチェックを外す",
+      text: `「${bandNameMap[selectedBandId]}」のスケジュールから、他のバンド練が入っている時間帯のチェックを外しますか？`,
       confirmText: "外す",
-      cancelText: "キャンセル",
+      materialIconName: "event_busy",
+      confirmColor: "text-blue-500 border-blue-500"
     });
 
     if (!result.isConfirmed) return;
@@ -160,10 +165,16 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
     );
     const currentData = (defaultSchedule?.schedule || {}) as Record<string, number[]>;
 
-    const confirmed = confirm(
-      `固定スケジュールを ${fixedStartDate} 〜 ${fixedEndDate} のデフォルトスケジュールに適用しますか？\n対象期間のスケジュールは上書きされます。`
-    );
-    if (!confirmed) return;
+    const result = await fire({
+      title: "固定スケジュールを適用",
+      text: `固定スケジュールを ${fixedStartDate} 〜 ${fixedEndDate} に適用しますか？`,
+      description: "対象期間のスケジュールは上書きされます。",
+      confirmText: "適用",
+      materialIconName: "event_busy",
+      confirmColor: "text-blue-500 border-blue-500"
+    });
+
+    if (!result.isConfirmed) return;
 
     setApplyingFixed(true);
     try {
@@ -217,7 +228,7 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
               : "bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:border-sky-400 dark:hover:border-sky-500 hover:text-sky-600 dark:hover:text-sky-400 hover:shadow-sm cursor-pointer"
               }`}
           >
-            <span className="material-icons text-[18px]">auto_fix_high</span>
+            <span className="material-symbols-outlined text-[18px]">auto_fix_high</span>
             {applying ? "適用中..." : "デフォルトを適用"}
           </button>
         )}
@@ -232,7 +243,7 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
               : "bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:border-amber-400 dark:hover:border-amber-500 hover:text-amber-600 dark:hover:text-amber-400 hover:shadow-sm cursor-pointer"
               }`}
           >
-            <span className="material-icons text-[18px]">event_busy</span>
+            <span className="material-symbols-outlined text-[18px]">event_busy</span>
             {removingOther ? "処理中..." : "他のバンド練のチェックを外す"}
           </button>
         )}
@@ -242,11 +253,11 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
           <button
             onClick={() => setShowFixedUI(!showFixedUI)}
             className={`${btnBase} ${showFixedUI
-              ? "bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400 shadow-sm cursor-pointer"
-              : "bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:border-emerald-400 dark:hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 hover:shadow-sm cursor-pointer"
+              ? "bg-sky-50 dark:bg-sky-950/40 border border-sky-300 dark:border-sky-700 text-sky-700 dark:text-sky-400 shadow-sm cursor-pointer"
+              : "bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:border-sky-400 dark:hover:border-sky-500 hover:text-sky-600 dark:hover:text-sky-400 hover:shadow-sm cursor-pointer"
               }`}
           >
-            <span className="material-icons text-[18px]">event_repeat</span>
+            <span className="material-symbols-outlined text-[18px]">event_repeat</span>
             固定スケジュールを適用
           </button>
         )}
@@ -265,7 +276,7 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
                 type="date"
                 value={fixedStartDate}
                 onChange={(e) => setFixedStartDate(e.target.value)}
-                className="px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-colors"
+                className="px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500 transition-colors"
               />
             </label>
             <label className="flex flex-col gap-1.5">
@@ -274,7 +285,7 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
                 type="date"
                 value={fixedEndDate}
                 onChange={(e) => setFixedEndDate(e.target.value)}
-                className="px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-colors"
+                className="px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500 transition-colors"
               />
             </label>
             <div className="flex gap-2">
@@ -283,17 +294,17 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
                 disabled={applyingFixed || !fixedStartDate || !fixedEndDate}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-all ${applyingFixed || !fixedStartDate || !fixedEndDate
                   ? btnDisabled
-                  : "bg-emerald-500 hover:bg-emerald-600 text-white shadow-sm hover:shadow cursor-pointer"
+                  : "bg-sky-500 hover:bg-sky-600 text-white shadow-sm hover:shadow cursor-pointer"
                   }`}
               >
-                <span className="material-icons text-[16px]">check</span>
+                <span className="material-symbols-outlined text-[16px]">check</span>
                 {applyingFixed ? "適用中..." : "適用"}
               </button>
               <button
                 onClick={() => { setShowFixedUI(false); setFixedStartDate(""); setFixedEndDate(""); }}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-all bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700 cursor-pointer"
               >
-                <span className="material-icons text-[16px]">close</span>
+                <span className="material-symbols-outlined text-[16px]">close</span>
                 キャンセル
               </button>
             </div>

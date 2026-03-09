@@ -16,9 +16,11 @@ export default function LogoutPage() {
   useEffect(() => {
     const showModal = async () => {
       const result = await fire({
-        title: "ログアウトしてよろしいですか？",
+        title: "ログアウト",
+        text: "ログアウトしてもよろしいですか？",
+        materialIconName: "logout",
         confirmText: "ログアウト",
-        cancelText: "キャンセル",
+        confirmColor: "text-red-500 border-red-500"
       });
       if (result.isConfirmed) {
         handleSignOut();

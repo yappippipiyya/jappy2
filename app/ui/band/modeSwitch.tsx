@@ -13,7 +13,7 @@ export function ModeSwitch({ mode, setMode }: {
               : "text-gray-600 dark:text-gray-400 hover:bg-zinc-50 dark:hover:bg-zinc-800"
           }`}
         >
-          <span className="material-icons">groups</span>
+          <span className="material-symbols-outlined">groups</span>
           <span className="font-medium">みんなの予定確認</span>
         </button>
 
@@ -25,7 +25,7 @@ export function ModeSwitch({ mode, setMode }: {
               : "text-gray-600 dark:text-gray-400 hover:bg-zinc-50 dark:hover:bg-zinc-800"
           }`}
         >
-          <span className="material-icons">edit_calendar</span>
+          <span className="material-symbols-outlined">edit_calendar</span>
           <span className="font-medium">バンド練編集</span>
         </button>
       </div>

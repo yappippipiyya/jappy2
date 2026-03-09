@@ -104,7 +104,7 @@ export default function bandForm({ band }: { band: Band | null }) {
                 <option key={h} value={h}>{Number(h.slice(0, 2))}時台から</option>
               ))}
             </select>
-            <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 material-icons text-sm">expand_more</span>
+            <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 material-symbols-outlined text-sm">expand_more</span>
           </div>
         </div>
         <div>
@@ -115,7 +115,7 @@ export default function bandForm({ band }: { band: Band | null }) {
                 <option key={h} value={h}>{Number(h.slice(0, 2))}時台まで</option>
               ))}
             </select>
-            <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 material-icons text-sm">expand_more</span>
+            <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 material-symbols-outlined text-sm">expand_more</span>
           </div>
             <p className="mt-1 text-xs text-zinc-500">注："19時台まで"＝ 19:00～20:00</p>
         </div>

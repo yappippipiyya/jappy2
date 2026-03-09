@@ -18,7 +18,7 @@ export function MemberComments({ band, schedules, bandUsers }: { band: Band; sch
     <div className="mx-auto max-w-4xl mt-8 px-5 mb-16">
       <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 shadow-sm">
         <h2 className="text-lg font-bold text-zinc-800 dark:text-zinc-100 mb-5 pb-4 border-b border-zinc-100 dark:border-zinc-800 flex items-center gap-2">
-          <span className="material-icons text-[20px] text-zinc-500">forum</span>
+          <span className="material-symbols-outlined text-[20px] text-zinc-500">forum</span>
           メンバーのコメント
         </h2>
 

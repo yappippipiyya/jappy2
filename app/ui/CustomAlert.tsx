@@ -1,12 +1,14 @@
 "use client";
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
+
 
 type AlertOptions = {
   title: string;
   text?: string;
+  description?: string;
+  materialIconName?: string;
   confirmText?: string;
-  cancelText?: string;
-  confirmColor?: string; // Tailwindのクラス名 (bg-red-500など)
+  confirmColor?: string;
 };
 
 type AlertContextType = {
@@ -14,6 +16,7 @@ type AlertContextType = {
 };
 
 const AlertContext = createContext<AlertContextType | undefined>(undefined);
+
 
 export const AlertProvider = ({ children }: { children: ReactNode }) => {
   const [alert, setAlert] = useState<(AlertOptions & { resolve: (val: any) => void }) | null>(null);
@@ -35,28 +38,69 @@ export const AlertProvider = ({ children }: { children: ReactNode }) => {
     <AlertContext.Provider value={{ fire }}>
       {children}
       {alert && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-xl">
-            <h2 className="text-xl font-bold">{alert.title}</h2>
-            {alert.text && <p className="mt-2 text-gray-600">{alert.text}</p>}
-            <div className="mt-6 flex justify-end gap-3">
-              <button
-                onClick={() => handleClose(false)}
-                className="rounded-md px-4 py-2 text-gray-600 hover:bg-gray-100"
-              >
-                {alert.cancelText || "キャンセル"}
-              </button>
-              <button
-                onClick={() => handleClose(true)}
-                className={`rounded-md px-4 py-2 text-white transition-colors ${
-                  alert.confirmColor || "bg-blue-600 hover:bg-blue-700"
-                }`}
-              >
-                {alert.confirmText || "OK"}
-              </button>
+        <>
+          {/* ふわっと表示させるためのアニメーション定義 */}
+          <style>{`
+            @keyframes overlayShow {
+              from { opacity: 0; }
+              to { opacity: 1; }
+            }
+            @keyframes contentShow {
+              from { opacity: 0; transform: scale(0.95) translateY(10px); }
+              to { opacity: 1; transform: scale(1) translateY(0); }
+            }
+          `}</style>
+
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+            style={{ animation: "overlayShow 0.2s ease-out" }}
+            // 背景クリック時にアラートを閉じる処理
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                handleClose(false);
+              }
+            }}
+          >
+            <div 
+              className="w-full max-w-110 rounded-xl bg-white shadow-2xl border border-zinc-200 overflow-hidden"
+              style={{ animation: "contentShow 0.2s cubic-bezier(0.16, 1, 0.3, 1)" }}
+            >
+
+              {/* Header */}
+              <div className="flex items-center justify-between px-4 py-2 border-b border-zinc-100 bg-zinc-50/50">
+                <h2 className="text-sm font-semibold text-zinc-900">{alert.title}</h2>
+                <button
+                  onClick={() => handleClose(false)}
+                  className="text-zinc-400 hover:text-zinc-600 p-1 transition-colors"
+                >
+                  <span className="material-symbols-outlined">close</span>
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="p-6 flex flex-col items-center text-center gap-5">
+                {alert.materialIconName && (
+                  <div className="text-zinc-400">
+                    <span className="material-symbols-outlined text-7xl!">{alert.materialIconName}</span>
+                  </div>
+                )}
+
+                <div className="my-1">
+                  <h3 className="text-xl font-bold text-zinc-900 my-1">{alert.text}</h3>
+                  <h4 className=" text-zinc-500">{alert.description}</h4>
+                </div>
+
+                {/* Action Button */}
+                <button
+                  onClick={() => handleClose(true)}
+                  className={`w-full py-2.5 px-4 rounded-lg border bg-zinc-50 hover:bg-zinc-100 font-semibold transition-all shadow-sm active:scale-[0.98] ${alert.confirmColor || "text-zinc-900 border-zinc-300"}`}
+                >
+                  {alert.confirmText || "OK"}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </AlertContext.Provider>
   );

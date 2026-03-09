@@ -41,9 +41,9 @@ export default async function Page() {
                       index !== group.content.length - 1 ? "border-b border-zinc-100 dark:border-zinc-800" : ""
                     } ${item.style}`}
                   >
-                    <span className="material-icons text-zinc-600 dark:text-zinc-300">{item.icon}</span>
+                    <span className="material-symbols-outlined text-zinc-600 dark:text-zinc-300">{item.icon}</span>
                     <span className="grow font-medium">{item.name}</span>
-                    <span className="material-icons text-zinc-300 dark:text-zinc-600 text-sm">chevron_right</span>
+                    <span className="material-symbols-outlined text-zinc-300 dark:text-zinc-600 text-sm">chevron_right</span>
                   </Link>
                 ))}
               </div>

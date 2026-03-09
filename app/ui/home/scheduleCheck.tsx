@@ -72,7 +72,7 @@ return (
           item.schedule && item.band && (
             <div key={index} className="group relative flex items-center p-4 bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 shadow-sm rounded-2xl hover:border-yellow-200 dark:hover:border-yellow-900/30">
               <div className="shrink-0 w-12 h-12 flex items-center justify-center bg-yellow-50 dark:bg-yellow-900/20 rounded-xl mr-4">
-                <span className="material-icons text-yellow-600 dark:text-yellow-500">event</span>
+                <span className="material-symbols-outlined text-yellow-600 dark:text-yellow-500">event</span>
               </div>
 
               <div className="flex-1 min-w-0">
@@ -104,14 +104,14 @@ return (
     >
       <div className="flex items-center gap-3">
         <div className="flex items-center justify-center p-2 rounded-lg">
-          <span className="material-icons text-lg leading-none">calendar_month</span>
+          <span className="material-symbols-outlined text-lg leading-none">calendar_month</span>
         </div>
 
         <span className="font-bold tracking-tight leading-none mb-0.5">
           全てのバンド練を確認
         </span>
       </div>
-      <span className="material-icons text-zinc-300 dark:text-zinc-700 mr-1">chevron_right</span>
+      <span className="material-symbols-outlined text-zinc-300 dark:text-zinc-700 mr-1">chevron_right</span>
     </Link>
   </div>
 );

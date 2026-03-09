@@ -68,7 +68,7 @@ export function CommentBox({ user, selectedBandId, schedules, onScheduleUpdate }
       <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2 text-sm font-medium text-zinc-600 dark:text-zinc-400">
-            <span className="material-icons text-[18px]">edit_note</span>
+            <span className="material-symbols-outlined text-[18px]">edit_note</span>
             備考・コメント
           </div>
           <div className="text-xs text-zinc-400 dark:text-zinc-500 h-4">
