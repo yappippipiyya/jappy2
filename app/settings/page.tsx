@@ -32,10 +32,10 @@ export default async function Page() {
   ];
 
   return (
-    <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <main className="min-h-screen pb-20 bg-zinc-50 dark:bg-zinc-950">
       <Navber />
 
-      <main className="grow max-w-2xl mx-auto w-full p-6">
+      <div className="grow max-w-2xl mx-auto w-full p-6">
         <h1 className="text-3xl font-bold mb-6">設定</h1>
 
         <div className="space-y-8">
@@ -62,7 +62,7 @@ export default async function Page() {
             </section>
           ))}
         </div>
-      </main>
+      </div>
 
       <Footer />
     </main>

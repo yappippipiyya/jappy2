@@ -19,11 +19,11 @@ export default async function AllSchedulesPage() {
   if (!user) return redirect("/signup");
 
   return (
-    <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <main className="min-h-screen pb-20 bg-zinc-50 dark:bg-zinc-950">
       <Navber />
 
       <Suspense fallback={<AllSchedulesSkeleton />}>
-        <div className="max-w-2xl mx-auto pb-20 pt-4 px-5">
+        <div className="max-w-2xl mx-auto pt-4 px-5">
 
           {/* ヘッダーセクション */}
           <div className="flex items-center gap-2 mb-4">

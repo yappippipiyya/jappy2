@@ -24,10 +24,10 @@ export default async function HomePage() {
   const bands = await fetchBands(user.id)
 
   return (
-    <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <main className="min-h-screen pb-20 bg-zinc-50 dark:bg-zinc-950">
       <Navber />
 
-      <div className="max-w-2xl mx-auto pb-20">
+      <div className="max-w-2xl mx-auto">
 
         {/* スケジュールセクション */}
         <section className="animate-in fade-in slide-in-from-top-4 duration-700">

@@ -18,7 +18,7 @@ export default async function Page() {
   if (!user) return redirect("/signup");
 
   return (
-    <main className="flex flex-col min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <main className="min-h-screen pb-20 bg-zinc-50 dark:bg-zinc-950">
       <Navber />
 
       <div className="flex flex-col">

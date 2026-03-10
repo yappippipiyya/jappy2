@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { auth } from "@/auth";
 import Link from "next/link";
 
@@ -23,11 +23,11 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   const bands = await fetchBands(user.id)
   const band = bands.find(b => b.token === token && b.creator_user_id === user.id)
 
-  if (!band) return
+  if (!band) return notFound()
 
 
   return (
-    <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <main className="min-h-screen pb-20 bg-zinc-50 dark:bg-zinc-950">
       <Navber />
 
       <div className="max-w-2xl mx-auto pb-20 pt-8 px-5">

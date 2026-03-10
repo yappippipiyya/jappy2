@@ -18,10 +18,10 @@ export default async function Page() {
   if (!user) return redirect("/signup");
 
   return (
-    <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <main className="min-h-screen pb-20 bg-zinc-50 dark:bg-zinc-950">
       <Navbar />
 
-      <main className="grow max-w-2xl mx-auto w-full p-6">
+      <div className="grow max-w-2xl mx-auto w-full p-6">
         <div className="flex items-center gap-2 mb-4">
           <Link
             href="/settings"
@@ -37,7 +37,7 @@ export default async function Page() {
         <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-xl p-6 shadow-sm">
           <AccountForm user={user}/>
         </div>
-      </main>
+      </div>
 
       <Footer />
     </main>

@@ -43,10 +43,10 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   const isArchived = band.archived || false
 
   return (
-    <main>
+    <main className="min-h-screen pb-20 bg-zinc-50 dark:bg-zinc-950">
       <Navber />
 
-      <div className="-mt-10 pt-10 pb-15 bg-zinc-50 dark:bg-zinc-950">
+      <div>
         <Header band={band} isCreator={isBandCreator} isArchived={isArchived} />
         <BandContent band={band} schedules={schedules} bandUsers={bandUsers}/>
       </div>

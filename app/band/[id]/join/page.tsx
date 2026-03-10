@@ -31,12 +31,14 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
 
 
   return (
-    <>
+    <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <Navber />
+
       <div className="flex justify-center items-center h-screen">
         <p>処理中...</p>
       </div>
+
       <Footer />
-    </>
+    </main>
   )
 }
