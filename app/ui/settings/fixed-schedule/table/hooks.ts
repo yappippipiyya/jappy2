@@ -64,7 +64,7 @@ export function useFixedScheduleSave(user: User, dayList: DayOfWeekItem[], hours
       newSchedule[key] = hoursArray;
     });
 
-    const result = await updateFixedSchedule(user.id, newSchedule);
+    const result = await updateFixedSchedule(newSchedule);
 
     if (result) {
       onSaved?.(result);

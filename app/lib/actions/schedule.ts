@@ -13,7 +13,6 @@ export async function updateSchedule(
   band_id: number,
   comment: string
 ): Promise<Schedule | null> {
-
   const session = await auth()
   const email = session?.user?.email || ""
   const user = await fetchUser(null, email)
@@ -60,34 +59,19 @@ export async function updateSchedule(
 }
 
 
-export async function deleteSchedules(user_id: number): Promise<boolean> {
-  try {
-    const supabase = createAdminClient()
+export async function updateFixedSchedule(fixed_schedule: Record<string, (0 | 1)[]>): Promise<FixedSchedule | null> {
+  const session = await auth();
+  const email = session?.user?.email || "";
+  const user = await fetchUser(null, email);
+  if (!user) return null;
 
-    const { error, count } = await supabase.from("schedules")
-      .delete({ count: 'exact' })
-      .eq("user_id", user_id)
-
-    return count !== null && count > 0;
-
-  } catch (error) {
-    console.error("データベースエラー(deleteSchedules):", error)
-    return false
-  }
-}
-
-
-export async function updateFixedSchedule(
-  user_id: number,
-  fixed_schedule: Record<string, (0 | 1)[]>,
-): Promise<FixedSchedule | null> {
   try {
     const supabase = createAdminClient()
 
     const { data: fixedScheduleData, error } = await supabase
       .from("fixed_schedules")
       .upsert({
-        user_id: user_id,
+        user_id: user.id,
         schedule: fixed_schedule,
       },
       { onConflict: "user_id" }
