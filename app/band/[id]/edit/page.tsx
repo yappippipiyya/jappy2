@@ -10,6 +10,10 @@ import Footer from "@/app/ui/footer"
 import BandForm from "@/app/ui/band/bandForm";
 
 
+export const metadata = {
+  title: 'バンド | 編集'
+}
+
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const token = params.id;

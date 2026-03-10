@@ -10,6 +10,10 @@ import Footer from "@/app/ui/footer"
 import { ScheduleManageContent } from "@/app/ui/schedule-manage/scheduleManageContent";
 
 
+export const metadata = {
+  title: '予定管理'
+}
+
 export default async function Page() {
   const session = await auth();
   const userEmail = session?.user?.email || ""

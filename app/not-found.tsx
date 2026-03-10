@@ -2,13 +2,15 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import Image from 'next/image';
 
-import notFoundPic from '@/public/notFound.png'
-
 import { fetchUser } from "@/app/lib/services/user"
 
 import Navber from "@/app/ui/navbar"
 import Footer from "@/app/ui/footer"
 
+
+export const metadata = {
+  title: 'Not Found'
+}
 
 export default async function Page() {
   const session = await auth()

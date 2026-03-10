@@ -13,6 +13,9 @@ import { Bands } from "@/app/ui/home/bands"
 import { ScheduleSkeleton, BandsSkeletons } from "@/app/ui/home/skeletons";
 
 
+export const metadata = {
+  title: 'ホーム'
+}
 
 export default async function HomePage() {
   const session = await auth()

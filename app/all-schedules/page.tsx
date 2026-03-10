@@ -11,6 +11,10 @@ import { Schedules } from "@/app/ui/all-schedules/schedules";
 import { AllSchedulesSkeleton } from "@/app/ui/all-schedules/scheduleSkeleton";
 
 
+export const metadata = {
+  title: '今後のバンド練'
+}
+
 export default async function AllSchedulesPage() {
   const session = await auth()
   const email = session?.user?.email || ""

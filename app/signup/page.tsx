@@ -6,6 +6,10 @@ import AccountForm from "@/app/ui/settings/accountForm";
 import { fetchUser } from "@/app/lib/services/user";
 
 
+export const metadata = {
+  title: 'アカウント作成'
+}
+
 export default async function Page() {
   const session = await auth();
   const email = session?.user?.email || "";

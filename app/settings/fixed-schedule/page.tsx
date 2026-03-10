@@ -10,6 +10,10 @@ import { fetchFixedSchedules } from "@/app/lib/services/schedule";
 import { fetchUser } from "@/app/lib/services/user";
 
 
+export const metadata = {
+  title: '設定 | 固定スケジュール'
+}
+
 export default async function Page() {
   const session = await auth();
   const userEmail = session?.user?.email || ""

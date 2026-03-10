@@ -12,6 +12,10 @@ import { BandContent } from "@/app/ui/band/bandContent";
 import { notFound } from "next/navigation";
 
 
+export const metadata = {
+  title: 'バンド'
+}
+
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const token = params.id;

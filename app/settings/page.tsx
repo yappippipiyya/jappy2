@@ -8,6 +8,10 @@ import Navber from "@/app/ui/navbar";
 import Footer from "@/app/ui/footer";
 
 
+export const metadata = {
+  title: '設定'
+}
+
 export default async function Page() {
   const session = await auth()
   const email = session?.user?.email || ""

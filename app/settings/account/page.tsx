@@ -9,6 +9,9 @@ import Footer from "@/app/ui/footer";
 import AccountForm from "@/app/ui/settings/accountForm";
 
 
+export const metadata = {
+  title: '設定 | アカウント'
+}
 
 export default async function Page() {
   const session = await auth();
