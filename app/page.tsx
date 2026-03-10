@@ -10,8 +10,7 @@ import Footer from "@/app/ui/footer"
 import { CreateButton } from "@/app/ui/home/createButton"
 import { ScheduleCheck } from "@/app/ui/home/scheduleCheck"
 import { Bands } from "@/app/ui/home/bands"
-import { BandsSkeletons } from "@/app/ui/skeletons";
-
+import { ScheduleSkeleton, BandsSkeletons } from "@/app/ui/home/skeletons";
 
 
 
@@ -32,22 +31,25 @@ export default async function HomePage() {
 
         {/* スケジュールセクション */}
         <section className="animate-in fade-in slide-in-from-top-4 duration-700">
-          <ScheduleCheck bands={bands} />
+          <Suspense fallback={<ScheduleSkeleton />}>
+            <ScheduleCheck bands={bands} />
+          </Suspense>
         </section>
 
         {/* バンド一覧セクション */}
         <section className="mt-2 animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both">
-          <div className="flex items-center justify-between px-5">
-            <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-              バンド一覧
-            </h2>
-            <CreateButton />
-          </div>
-
           <Suspense fallback={<BandsSkeletons />}>
+            <div className="flex items-center justify-between px-5">
+              <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+                バンド一覧
+              </h2>
+              <CreateButton />
+            </div>
+
             <Bands bands={bands} />
           </Suspense>
         </section>
+
       </div>
 
       <Footer />
