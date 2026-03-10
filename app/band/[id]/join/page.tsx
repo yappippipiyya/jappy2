@@ -5,7 +5,9 @@ import Footer from "@/app/ui/footer"
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { joinBand } from "@/app/lib/actions/band";
+
 
 export default function Page(props: { params: Promise<{ id: string }> }) {
   const router = useRouter();
@@ -18,6 +20,11 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
       const success = await joinBand(token)
 
       router.push("/")
+
+      success
+        ? toast.success("参加しました！")
+        : toast.error("エラーが発生しました")
+
     };
     handlejoin();
   }, [props, router])
