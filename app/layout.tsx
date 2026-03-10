@@ -25,7 +25,7 @@ export default function RootLayout({
           richColors
           position="top-right"
           theme="system"
-          duration={2000}
+          closeButton
           toastOptions={{
             className: "mt-22"
           }}

@@ -31,7 +31,7 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
     );
 
     if (!defaultSchedule || !defaultSchedule.schedule) {
-      toast.error("デフォルトスケジュールが見つかりません");
+      toast.error("デフォルトスケジュールが見つかりません。");
       return;
     }
 
@@ -91,7 +91,7 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
     );
 
     if (otherBandPractices.length === 0) {
-      toast.info("他のバンド練の予定はありません");
+      toast.info("他のバンド練の予定はありません。");
       return;
     }
 
@@ -129,11 +129,12 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
       const result = await updateSchedule(user.id, newSchedule, selectedBandId, "");
       if (result) {
         onScheduleUpdate(result);
+        toast.success("他のバンド練のチェックを外しました。");
       } else {
-        toast.error("更新に失敗しました");
+        toast.error("更新に失敗しました。");
       }
     } catch {
-      toast.error("更新中にエラーが発生しました");
+      toast.error("更新中にエラーが発生しました。");
     } finally {
       setRemovingOther(false);
     }
@@ -144,17 +145,17 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
     if (!isDefault || applyingFixed) return;
 
     if (!fixedStartDate || !fixedEndDate) {
-      toast.info("開始日と終了日を選択してください");
+      toast.info("開始日と終了日を選択してください。");
       return;
     }
     if (fixedStartDate > fixedEndDate) {
-      toast.info("開始日は終了日より前に設定してください");
+      toast.info("開始日は終了日より前に設定してください。");
       return;
     }
 
     const fixedSchedule = fixedSchedules[0];
     if (!fixedSchedule || !fixedSchedule.schedule) {
-      toast.warning("固定スケジュールが登録されていません");
+      toast.warning("固定スケジュールが登録されていません。");
       return;
     }
 
@@ -202,11 +203,12 @@ export function ActionButtons({ user, selectedBandId, bandNameMap, schedules, fi
         setShowFixedUI(false);
         setFixedStartDate("");
         setFixedEndDate("");
+        toast.success("固定スケジュールを適用しました。")
       } else {
-        toast.error("適用に失敗しました");
+        toast.error("適用に失敗しました。");
       }
     } catch {
-      toast.error("適用中にエラーが発生しました");
+      toast.error("適用中にエラーが発生しました。");
     } finally {
       setApplyingFixed(false);
     }

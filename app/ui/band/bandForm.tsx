@@ -60,7 +60,7 @@ export default function bandForm({ band }: { band: Band | null }) {
         router.push(`/band/${res.token}`);
         toast.success(`${name}を作成しました！`)
       } else {
-        toast.error("作成に失敗しました");
+        toast.error("作成に失敗しました。");
         setIsPending(false);
       }
     }

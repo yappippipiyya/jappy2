@@ -23,7 +23,7 @@ export default function AccountForm({ user }: { user: User }) {
       const res = await updateAccount(name);
 
       if (res) {
-        toast.success("保存しました");
+        toast.success("保存しました。");
 
         setSaved(true);
         router.refresh();
@@ -32,7 +32,7 @@ export default function AccountForm({ user }: { user: User }) {
           setSaved(false);
         }, 2000);
       } else {
-        toast.error("更新に失敗しました");
+        toast.error("更新に失敗しました。");
       }
     });
   }
