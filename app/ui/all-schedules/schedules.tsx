@@ -1,4 +1,6 @@
-import { Band } from "@/app/lib/types";
+import { Band, User } from "@/app/lib/types";
+import { fetchBands } from "@/app/lib/services/band";
+import { fetchSchedules } from "@/app/lib/services/schedule";
 
 
 export interface ScheduleItem {
@@ -11,7 +13,57 @@ export interface ScheduleItem {
 
 export type EnrichedSchedule = ScheduleItem & { band: Band };
 
-export function Schedules({ enrichedSchedules }: { enrichedSchedules: EnrichedSchedule[] }) {
+export async function Schedules({ user }: { user: User }) {
+  const bands = await fetchBands(user.id);
+
+  const bandPracticeSchedules = (await Promise.all(
+    bands.map((b) => fetchSchedules(0, b.id))
+  )).flat();
+
+  const now = new Date();
+  const currentYMD = now.toISOString().split('T')[0];
+  const currentHour = now.getHours();
+
+  const allSchedules = bandPracticeSchedules.flatMap((entry) => {
+    const scheduleData = entry.schedule as Record<string, number[]>;
+    const schedules: { bandId: number | null, date: string, startTime: string, endTime: string, sortKey: Date }[] = [];
+
+    Object.entries(scheduleData).forEach(([date, hours]) => {
+      let start: number | null = null;
+
+      hours.forEach((isBooked, hour) => {
+        if (isBooked === 1 && start === null) {
+          start = hour;
+        } else if ((isBooked === 0 || hour === 23) && start !== null) {
+          const end = isBooked === 1 ? hour + 1 : hour;
+
+          const isFuture = date > currentYMD || (date === currentYMD && end > currentHour);
+
+          if (isFuture) {
+            schedules.push({
+              bandId: entry.band_id,
+              date,
+              startTime: `${start.toString().padStart(2, '0')}:00`,
+              endTime: `${end.toString().padStart(2, '0')}:00`,
+              sortKey: new Date(`${date}T${start.toString().padStart(2, '0')}:00:00`)
+            });
+          }
+          start = null;
+        }
+      });
+    });
+    return schedules;
+  });
+
+  allSchedules.sort((a, b) => a.sortKey.getTime() - b.sortKey.getTime());
+
+  const enrichedSchedules: EnrichedSchedule[] = allSchedules
+    .map(sch => {
+      const band = bands.find(b => b.id === sch.bandId);
+      return { ...sch, band };
+    })
+    .filter((item): item is EnrichedSchedule => !!item.band);
+
   return (
     <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
       {enrichedSchedules.length > 0 ? (
