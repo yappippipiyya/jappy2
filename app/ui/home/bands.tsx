@@ -66,13 +66,13 @@ export async function Bands({ bands }: { bands: Band[] }) {
           <div className="w-16 h-16 flex items-center justify-center bg-zinc-50 dark:bg-zinc-950 rounded-full mb-4">
             <span className="material-symbols-outlined text-3xl text-zinc-400">event_busy</span>
           </div>
-          <p className="font-bold m-2">
+          <div className="font-bold m-2">
             参加しているバンドがありません。
-          </p>
-          <p className="text-zinc-500 dark:text-zinc-400">
+          </div>
+          <div className="text-zinc-500 dark:text-zinc-400">
             <p>まずはバンドに参加しましょう。</p>
             <p>バンドを作成するか、バンドマスターに依頼してください。</p>
-          </p>
+          </div>
         </div>
       )}
     </div>

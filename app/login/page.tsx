@@ -10,7 +10,7 @@ export default async function Home() {
           src="/jappy.png"
           width={400}
           height={300}
-          alt="a"
+          alt="jappy logo"
         />
       </div>
       <div className="py-8">
