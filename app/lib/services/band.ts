@@ -16,7 +16,7 @@ export async function fetchBand(id: number | null = null, token: string | null =
       return null;
     }
 
-    const { data, error } = await request.single();
+    const { data, error } = await request.maybeSingle();
 
     if (error) throw error;
 
