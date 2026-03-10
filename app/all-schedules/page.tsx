@@ -12,11 +12,10 @@ import { AllSchedulesSkeleton } from "@/app/ui/all-schedules/scheduleSkeleton";
 
 
 export default async function AllSchedulesPage() {
-  const session = await auth();
+  const session = await auth()
+  const email = session?.user?.email || ""
 
-  if (!session?.user?.email) return null;
-
-  const user = await fetchUser(null, session.user.email);
+  const user = await fetchUser(null, email)
   if (!user) return redirect("/signup");
 
   return (
