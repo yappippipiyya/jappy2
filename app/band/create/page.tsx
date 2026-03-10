@@ -1,19 +1,20 @@
 import { auth } from "@/auth";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 import { fetchUser } from "@/app/lib/services/user";
-import { redirect } from "next/navigation";
+
 import Navber from "@/app/ui/navber";
 import Footer from "@/app/ui/footer";
 import BandForm from "@/app/ui/band/bandForm";
 
 
 export default async function CreateBandPage() {
-  const session = await auth();
-  if (!session?.user?.email) redirect("/login");
+  const session = await auth()
+  const email = session?.user?.email || ""
 
-  const user = await fetchUser(null, session.user.email);
-  if (!user) return null;
+  const user = await fetchUser(null, email)
+  if (!user) return redirect("/signup");
 
   return (
     <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">

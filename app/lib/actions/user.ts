@@ -6,7 +6,7 @@ import { createAdminClient } from '@/app/lib/supabase'
 import { fetchUser } from '@/app/lib/services/user';
 
 
-export async function addAccount(name: string): Promise<number | null> {
+export async function createAccount(name: string): Promise<boolean> {
   const session = await auth();
   const email = session?.user?.email || "";
 
@@ -22,13 +22,13 @@ export async function addAccount(name: string): Promise<number | null> {
       .select("id")
       .single()
 
-    if ( error ) throw error;
+    if (error) throw error;
 
-    return userData.id;
+    return true
 
   } catch (error) {
     console.error("データベースエラー(add):", error);
-    return null;
+    return false;
   }
 }
 
@@ -51,7 +51,7 @@ export async function updateAccount(name: string): Promise<boolean> {
       .select("id")
       .single()
 
-    if ( error ) throw error;
+    if (error) throw error;
 
     return true
 
@@ -76,7 +76,7 @@ export async function deleteAccount(): Promise<boolean> {
       .delete({ count: 'exact' })
       .eq("id", user.id)
 
-    if ( error ) throw error;
+    if (error) throw error;
 
     return count !== null && count > 0;
 

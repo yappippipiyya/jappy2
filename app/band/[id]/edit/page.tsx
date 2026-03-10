@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import Link from "next/link";
 
@@ -17,9 +18,9 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   const email = session?.user?.email || ""
 
   const user = await fetchUser(null, email)
-  if (!user) return
-  const bands = await fetchBands(user.id)
+  if (!user) return redirect("/signup");
 
+  const bands = await fetchBands(user.id)
   const band = bands.find(b => b.token === token && b.creator_user_id === user.id)
 
   if (!band) return

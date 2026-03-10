@@ -9,6 +9,7 @@ import { fetchBands } from "@/app/lib/services/band";
 import { fetchSchedules } from "@/app/lib/services/schedule";
 
 import { Schedules, EnrichedSchedule } from "@/app/ui/all-schedules/schedules";
+import { redirect } from "next/navigation";
 
 
 export default async function AllSchedulesPage() {
@@ -17,7 +18,7 @@ export default async function AllSchedulesPage() {
   if (!session?.user?.email) return null;
 
   const user = await fetchUser(null, session.user.email);
-  if (!user) return null;
+  if (!user) return redirect("/sighup");
 
   const bands = await fetchBands(user.id);
 

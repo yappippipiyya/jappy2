@@ -1,10 +1,12 @@
 import { auth } from "@/auth";
-import Navber from "@/app/ui/navber"
-import Footer from "@/app/ui/footer"
+import { redirect } from "next/navigation";
 
+import { fetchUser } from "@/app/lib/services/user";
 import { fetchBand, fetchBandUsers } from "@/app/lib/services/band"
 import { fetchSchedules } from "@/app/lib/services/schedule"
 
+import Navber from "@/app/ui/navber"
+import Footer from "@/app/ui/footer"
 import { Header } from "@/app/ui/band/header";
 import { BandContent } from "@/app/ui/band/bandContent";
 import { notFound } from "next/navigation";
@@ -13,12 +15,18 @@ import { notFound } from "next/navigation";
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const token = params.id;
+
+  const session = await auth()
+  const email = session?.user?.email || ""
+
+  const user = await fetchUser(null, email)
+  if (!user) return redirect("/signup");
+
   const band = await fetchBand(null, token)
 
   if ( !band ) return notFound()
 
-  const [session, bandUsers, schedules] = await Promise.all([
-    auth(),
+  const [bandUsers, schedules] = await Promise.all([
     fetchBandUsers(band.id),
     fetchSchedules(null, band.id)
   ]);

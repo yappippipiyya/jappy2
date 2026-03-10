@@ -1,25 +1,26 @@
 import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
+
+import { fetchUser } from "@/app/lib/services/user"
+import { fetchBands } from "@/app/lib/services/band"
 
 import Navber from "@/app/ui/navber"
 import Footer from "@/app/ui/footer"
 import { CreateButton } from "@/app/ui/home/createButton"
 import { ScheduleCheck } from "@/app/ui/home/scheduleCheck"
 import { Bands } from "@/app/ui/home/bands"
-
-import { fetchUser } from "@/app/lib/services/user"
-import { fetchBands } from "@/app/lib/services/band"
-
 import { BandsSkeletons } from "@/app/ui/skeletons";
+
+
 
 
 export default async function HomePage() {
   const session = await auth()
+  const email = session?.user?.email || ""
 
-  if ( !session?.user?.email ) return null;
-
-  const user = await fetchUser(null, session.user.email)
-  if ( !user ) return null;
+  const user = await fetchUser(null, email)
+  if (!user) return redirect("/signup");
 
   const bands = await fetchBands(user.id)
 

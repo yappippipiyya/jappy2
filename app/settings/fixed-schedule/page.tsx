@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 
 import Navber from "@/app/ui/navber"
@@ -14,7 +15,7 @@ export default async function Page() {
   const userEmail = session?.user?.email || ""
   const user = await fetchUser(null, userEmail)
 
-  if (!user) return
+  if (!user) return redirect("/signup");
 
   const fixedSchedules = await fetchFixedSchedules(user.id)
   const fixedSchedule = fixedSchedules.length > 0 ? fixedSchedules[0] : null;

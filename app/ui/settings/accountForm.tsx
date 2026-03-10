@@ -2,11 +2,11 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { updateAccount } from "@/app/lib/actions/user";
+import { createAccount, updateAccount } from "@/app/lib/actions/user";
 import { User } from "@/app/lib/types";
 import { toast } from "sonner";
 
-export default function AccountForm({ user }: { user: User }) {
+export default function AccountForm({ user, email }: { user?: User, email?: string}) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [saved, setSaved] = useState(false);
@@ -20,19 +20,26 @@ export default function AccountForm({ user }: { user: User }) {
     setSaved(false);
 
     startTransition(async () => {
-      const res = await updateAccount(name);
+      const res = user
+        ? await updateAccount(name)
+        : await createAccount(name);
 
       if (res) {
-        toast.success("保存しました。");
+        user
+          ? toast.success("保存しました。")
+          : toast.success("登録しました。")
 
         setSaved(true);
         router.refresh();
+        if (!user) router.push("/");
 
         setTimeout(() => {
           setSaved(false);
         }, 2000);
       } else {
-        toast.error("更新に失敗しました。");
+        user
+          ? toast.error("更新に失敗しました。")
+          : toast.error("登録に失敗しました。")
       }
     });
   }
@@ -50,7 +57,7 @@ export default function AccountForm({ user }: { user: User }) {
           type="text"
           id="name"
           name="name"
-          defaultValue={user.name || ""}
+          defaultValue={user?.name ?? ""}
           className="w-full px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent focus:ring-2 focus:ring-zinc-500 outline-none transition-all"
           required
         />
@@ -67,7 +74,7 @@ export default function AccountForm({ user }: { user: User }) {
           type="email"
           id="email"
           name="email"
-          defaultValue={user?.email ?? ""}
+          defaultValue={user?.email || email}
           className="w-full px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 text-zinc-500 cursor-not-allowed outline-none"
           readOnly
           tabIndex={-1}
@@ -90,14 +97,14 @@ export default function AccountForm({ user }: { user: User }) {
           {isPending ? (
             <span className="flex items-center gap-2">
               <div className="animate-spin h-5 w-5 border-2 border-zinc-500 border-t-transparent rounded-full"></div>
-              保存中...
+              {user ? "保存中..." : "登録中..."}
             </span>
           ) : saved ? (
             <span className="flex items-center gap-2">
-              ✓ 保存しました
+              ✓ {user ? "保存しました" : "登録しました"}
             </span>
           ) : (
-            "保存する"
+            user ? "保存する" : "登録する"
           )}
         </button>
       </div>

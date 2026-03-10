@@ -1,8 +1,20 @@
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 import Link from "next/link";
+
+import { fetchUser } from "@/app/lib/services/user";
+
 import Navber from "@/app/ui/navber";
 import Footer from "@/app/ui/footer";
 
+
 export default async function Page() {
+  const session = await auth()
+  const email = session?.user?.email || ""
+
+  const user = await fetchUser(null, email)
+  if (!user) return redirect("/signup");
+
   const settings = [
     {
       title: "ツール",

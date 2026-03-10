@@ -46,8 +46,8 @@ export async function ScheduleCheck({ bands }: { bands: Band[] }) {
 
   allSchedules.sort((a, b) => a.sortKey.getTime() - b.sortKey.getTime());
 
-  const nextSchedule = allSchedules[0] || null;
-  const nextNextSchedule = allSchedules[1] || null;
+  const nextSchedule = allSchedules[0] || {};
+  const nextNextSchedule = allSchedules[1] || {};
 
   const nextScheduleBand = await fetchBand(nextSchedule.bandId)
   const nextNextScheduleBand = await fetchBand(nextNextSchedule.bandId)
