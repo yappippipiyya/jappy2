@@ -20,11 +20,16 @@ export default async function Page() {
       <Navbar />
 
       <main className="grow max-w-2xl mx-auto w-full p-6">
-        <div className="flex items-center gap-2 mb-6">
-          <Link href="/settings" className="p-2 -ml-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-colors">
-            <span className="material-symbols-outlined text-zinc-600 dark:text-zinc-300">arrow_back</span>
+        <div className="flex items-center gap-2 mb-4">
+          <Link
+            href="/settings"
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+          >
+            <span className="material-symbols-outlined text-zinc-600 dark:text-zinc-400">arrow_back</span>
           </Link>
-          <h1 className="text-3xl font-bold">アカウント設定</h1>
+          <h1 className="mb-1 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+            アカウント設定
+          </h1>
         </div>
 
         <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-xl p-6 shadow-sm">

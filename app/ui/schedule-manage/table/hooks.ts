@@ -4,6 +4,7 @@ import { updateSchedule } from "@/app/lib/actions/schedule";
 import { SaveStatus, DateListItem, TooltipState } from "@/app/ui/table/types";
 import { ScheduleMatrix } from "./types";
 
+
 // 1. スケジュールデータをマトリクスに変換するフック
 export function useScheduleMatrix(selectedBandId: number, bands: Band[], band: Partial<Band>, schedules: Schedule[], user: User) {
   return useMemo(() => {
