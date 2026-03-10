@@ -1,6 +1,6 @@
 "use client";
 
-import Navber from "@/app/ui/navber"
+import Navber from "@/app/ui/navbar"
 import Footer from "@/app/ui/footer"
 
 import { useEffect } from "react";

@@ -5,7 +5,7 @@ import { fetchUser } from "@/app/lib/services/user";
 import { fetchBand, fetchBandUsers } from "@/app/lib/services/band"
 import { fetchSchedules } from "@/app/lib/services/schedule"
 
-import Navber from "@/app/ui/navber"
+import Navber from "@/app/ui/navbar"
 import Footer from "@/app/ui/footer"
 import { Header } from "@/app/ui/band/header";
 import { BandContent } from "@/app/ui/band/bandContent";

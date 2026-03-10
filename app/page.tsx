@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import { fetchUser } from "@/app/lib/services/user"
 import { fetchBands } from "@/app/lib/services/band"
 
-import Navber from "@/app/ui/navber"
+import Navber from "@/app/ui/navbar"
 import Footer from "@/app/ui/footer"
 import { CreateButton } from "@/app/ui/home/createButton"
 import { ScheduleCheck } from "@/app/ui/home/scheduleCheck"

@@ -5,7 +5,7 @@ import { Suspense } from "react";
 
 import { fetchUser } from "@/app/lib/services/user";
 
-import Navber from "@/app/ui/navber";
+import Navber from "@/app/ui/navbar";
 import Footer from "@/app/ui/footer";
 import { Schedules } from "@/app/ui/all-schedules/schedules";
 import { AllSchedulesSkeleton } from "@/app/ui/all-schedules/scheduleSkeleton";

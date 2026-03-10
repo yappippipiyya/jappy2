@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
-import Navber from "@/app/ui/navber"
+import Navber from "@/app/ui/navbar"
 import Footer from "@/app/ui/footer"
 
 import { FixedScheduleContent } from "@/app/ui/settings/fixed-schedule/fixedScheduleContent";

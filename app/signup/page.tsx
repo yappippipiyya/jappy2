@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
-import Navbar from "@/app/ui/navber";
+import Navbar from "@/app/ui/navbar";
 import AccountForm from "@/app/ui/settings/accountForm";
 import { fetchUser } from "@/app/lib/services/user";
 

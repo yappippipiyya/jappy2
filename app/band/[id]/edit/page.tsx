@@ -5,7 +5,7 @@ import Link from "next/link";
 import { fetchBands } from "@/app/lib/services/band"
 import { fetchUser } from "@/app/lib/services/user";
 
-import Navber from "@/app/ui/navber"
+import Navber from "@/app/ui/navbar"
 import Footer from "@/app/ui/footer"
 import BandForm from "@/app/ui/band/bandForm";
 

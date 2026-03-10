@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { fetchUser } from "@/app/lib/services/user";
 
-import Navbar from "@/app/ui/navber";
+import Navbar from "@/app/ui/navbar";
 import Footer from "@/app/ui/footer";
 import AccountForm from "@/app/ui/settings/accountForm";
 

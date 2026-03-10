@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import { handleSignOut } from "@/app/lib/actions/handleSignOut";
-import Navber from "@/app/ui/navber";
+import Navber from "@/app/ui/navbar";
 import Footer from "@/app/ui/footer";
 import { useAlert } from "@/app/ui/CustomAlert"
 
