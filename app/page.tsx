@@ -25,7 +25,7 @@ export default async function HomePage() {
   if (!user) return redirect("/signup");
 
   const bands = await fetchBands(user.id, true)
-  const allBands = await fetchBands(ser.id)
+  const allBands = await fetchBands(user.id)
 
   return (
     <main className="min-h-screen pb-20 bg-zinc-50 dark:bg-zinc-950">
