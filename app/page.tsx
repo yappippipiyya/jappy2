@@ -24,7 +24,8 @@ export default async function HomePage() {
   const user = await fetchUser(null, email)
   if (!user) return redirect("/signup");
 
-  const bands = await fetchBands(user.id)
+  const bands = await fetchBands(user.id, true)
+  const allBands = await fetchBands(ser.id)
 
   return (
     <main className="min-h-screen pb-20 bg-zinc-50 dark:bg-zinc-950">
@@ -49,7 +50,7 @@ export default async function HomePage() {
               <CreateButton />
             </div>
 
-            <Bands bands={bands} />
+            <Bands bands={allBands} />
           </Suspense>
         </section>
 
