@@ -17,7 +17,7 @@ export default async function AllSchedulesPage() {
   if (!session?.user?.email) return null;
 
   const user = await fetchUser(null, session.user.email);
-  if (!user) return redirect("/sighup");
+  if (!user) return redirect("/signup");
 
   return (
     <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
