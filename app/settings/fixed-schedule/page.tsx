@@ -29,7 +29,7 @@ export default async function Page() {
         {/* ヘッダーセクション */}
         <div className="flex items-center gap-2 mb-4">
           <Link
-            href="/"
+            href="/settings"
             className="flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
           >
             <span className="material-symbols-outlined text-zinc-600 dark:text-zinc-400">arrow_back</span>
