@@ -9,10 +9,6 @@ import { toast } from "sonner";
 import { joinBand } from "@/app/lib/actions/band";
 
 
-export const metadata = {
-  title: 'バンド | 参加'
-}
-
 export default function Page(props: { params: Promise<{ id: string }> }) {
   const router = useRouter();
 
