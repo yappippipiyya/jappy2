@@ -1,0 +1,16 @@
+{
+  "name": "Jappy2",
+  "short_name": "Jappy2",
+  "description": "スケジュール管理アプリ",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ]
+}
