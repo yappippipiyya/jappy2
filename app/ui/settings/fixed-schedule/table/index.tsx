@@ -69,15 +69,22 @@ export function Table({ user, fixedSchedule, onScheduleUpdate }: { user: User; f
               <th className="sticky top-0 left-0 z-30 bg-slate-100 dark:bg-gray-800 border-b border-r border-slate-200 dark:border-zinc-700 p-2 w-6">
                 <span className="text-xs font-bold block">時刻</span>
               </th>
-              {dayList.map(({ key, label }) => (
-                <th
-                  key={key}
-                  className="sticky top-0 z-20 bg-slate-100 hover:bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-b border-r border-slate-200 dark:border-zinc-700 p-2 min-w-11 whitespace-pre-wrap leading-tight text-slate-700 dark:text-zinc-200 font-semibold text-xs cursor-pointer transition-colors"
-                  onClick={() => toggleColumn(key)}
-                >
-                  {label}
-                </th>
-              ))}
+              {dayList.map(({ key, label }) => {
+                const colorMap: Record<string, string> = {
+                  "土": "text-blue-500",
+                  "日": "text-red-500",
+                };
+                const textColor = colorMap[label] ?? "text-slate-700 dark:text-zinc-200";
+                return (
+                  <th
+                    key={key}
+                    className={`sticky top-0 z-20 bg-slate-100 hover:bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 border-b border-r border-slate-200 dark:border-zinc-700 p-2 min-w-11 whitespace-pre-wrap leading-tight font-semibold text-xs cursor-pointer transition-colors ${textColor}`}
+                    onClick={() => toggleColumn(key)}
+                  >
+                    {label}
+                  </th>
+                )
+              })}
             </tr>
           </thead>
           <tbody>
