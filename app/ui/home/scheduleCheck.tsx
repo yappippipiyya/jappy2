@@ -47,8 +47,19 @@ export async function ScheduleCheck({ bands }: { bands: Band[] }) {
 
   allSchedules.sort((a, b) => a.sortKey.getTime() - b.sortKey.getTime());
 
-  const nextSchedule = allSchedules[0] || {};
-  const nextNextSchedule = allSchedules[1] || {};
+  const dayLabels = ["日", "月", "火", "水", "木", "金", "土"];
+
+  const formattedSchedules = allSchedules.slice(0, 2).map(s => {
+    const dateObj = new Date(s.date);
+    const dayOfWeek = dayLabels[dateObj.getDay()];
+    return {
+      ...s,
+      date: `${s.date}（${dayOfWeek}）`
+    };
+  });
+
+  const nextSchedule = formattedSchedules[0] || {};
+  const nextNextSchedule = formattedSchedules[1] || {};
 
   const nextScheduleBand = await fetchBand(nextSchedule.bandId)
   const nextNextScheduleBand = await fetchBand(nextNextSchedule.bandId)

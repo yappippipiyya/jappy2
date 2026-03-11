@@ -7,6 +7,7 @@ import { fetchUser } from "@/app/lib/services/user";
 import Navbar from "@/app/ui/navbar";
 import Footer from "@/app/ui/footer";
 import AccountForm from "@/app/ui/settings/accountForm";
+import AccountDeleteButton from "@/app/ui/settings/accountDeleteButton";
 
 
 export const metadata = {
@@ -40,6 +41,8 @@ export default async function Page() {
         <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-xl p-6 shadow-sm">
           <AccountForm user={user}/>
         </div>
+
+        <AccountDeleteButton/>
       </div>
 
       <Footer />
