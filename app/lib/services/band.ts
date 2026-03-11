@@ -72,3 +72,21 @@ export async function fetchBandUsers(band_id: number): Promise<User[]> {
     return []
   }
 }
+
+export async function fetchBandsUsers(band_ids: number[]): Promise<User[]> {
+  try {
+    const supabase = createAdminClient()
+
+    const { data: userData, error } = await supabase
+      .from("users")
+      .select("*, band_user!inner(band_id)")
+      .in("band_user.band_id", band_ids)
+
+    if ( error || !userData ) throw error;
+
+    return userData;
+  } catch (error) {
+    console.error("データベースエラー(getBandsUsers):", error)
+    return []
+  }
+}

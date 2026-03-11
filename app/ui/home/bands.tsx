@@ -1,16 +1,20 @@
-import { fetchBandUsers } from "@/app/lib/services/band"
+import { fetchBandsUsers } from "@/app/lib/services/band"
 import Link from "next/link"
 import CopyButton from "./copyButton"
 import { Band } from "@/app/lib/types"
 
 
 export async function Bands({ bands }: { bands: Band[] }) {
-  const bandsWithUsers = await Promise.all(
-    bands.map(async (b) => {
-      const users = await fetchBandUsers(b.id)
-      return { ...b, users }
-    })
-  )
+  const bandIds = bands.map((b) => b.id);
+
+  const allUsers = await fetchBandsUsers(bandIds);
+
+  const bandsWithUsers = bands.map((b) => {
+    const users = allUsers.filter((user: any) =>
+      user.band_user.some((bu: any) => bu.band_id === b.id)
+    );
+    return { ...b, users };
+  });
 
   return (
     <div className="flex flex-col gap-4 p-5 max-w-2xl mx-auto -mt-2">

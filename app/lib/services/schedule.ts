@@ -27,7 +27,22 @@ export async function fetchSchedules(
 
     if ( error ) throw error
 
-    return scheduleData;
+    return (scheduleData || []).map((item) => {
+      let finalSchedule = item.schedule;
+
+      while (typeof finalSchedule === 'string') {
+        try {
+          finalSchedule = JSON.parse(finalSchedule);
+        } catch (e) {
+          break;
+        }
+      }
+
+      return {
+        ...item,
+        schedule: finalSchedule
+      };
+    });
 
   } catch (error) {
     console.error("データベースエラー(getSchedules):", error)

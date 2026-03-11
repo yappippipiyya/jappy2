@@ -18,6 +18,7 @@ export async function ScheduleCheck({ bands }: { bands: Band[] }) {
     const schedules: { bandId: number | null, date: string, startTime: string, endTime: string, sortKey: Date }[] = [];
 
     Object.entries(scheduleData).forEach(([date, hours]) => {
+      if (!Array.isArray(hours)) {console.log(hours);return};
       let start: number | null = null;
 
       hours.forEach((isBooked, hour) => {
