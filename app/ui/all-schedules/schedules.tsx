@@ -1,4 +1,5 @@
 import { Band, Schedule } from "@/app/lib/types";
+import { getRefinedSchedules } from "./hooks";
 
 
 export interface ScheduleItem {
@@ -9,52 +10,9 @@ export interface ScheduleItem {
   sortKey: Date;
 }
 
-export type EnrichedSchedule = ScheduleItem & { band: Band };
 
 export async function Schedules({ bands, bandPracticeSchedules }: { bands: Band[], bandPracticeSchedules: Schedule[] }) {
-  const now = new Date();
-  const currentYMD = now.toISOString().split('T')[0];
-  const currentHour = now.getHours();
-
-  const allSchedules = bandPracticeSchedules.flatMap((entry) => {
-    const scheduleData = entry.schedule as Record<string, number[]>;
-    const schedules: { bandId: number | null, date: string, startTime: string, endTime: string, sortKey: Date }[] = [];
-
-    Object.entries(scheduleData).forEach(([date, hours]) => {
-      let start: number | null = null;
-
-      hours.forEach((isBooked, hour) => {
-        if (isBooked === 1 && start === null) {
-          start = hour;
-        } else if ((isBooked === 0 || hour === 23) && start !== null) {
-          const end = isBooked === 1 ? hour + 1 : hour;
-
-          const isFuture = date > currentYMD || (date === currentYMD && end > currentHour);
-
-          if (isFuture) {
-            schedules.push({
-              bandId: entry.band_id,
-              date,
-              startTime: `${start.toString().padStart(2, '0')}:00`,
-              endTime: `${end.toString().padStart(2, '0')}:00`,
-              sortKey: new Date(`${date}T${start.toString().padStart(2, '0')}:00:00`)
-            });
-          }
-          start = null;
-        }
-      });
-    });
-    return schedules;
-  });
-
-  allSchedules.sort((a, b) => a.sortKey.getTime() - b.sortKey.getTime());
-
-  const enrichedSchedules: EnrichedSchedule[] = allSchedules
-    .map(sch => {
-      const band = bands.find(b => b.id === sch.bandId);
-      return { ...sch, band };
-    })
-    .filter((item): item is EnrichedSchedule => !!item.band);
+  const enrichedSchedules = getRefinedSchedules(bands, bandPracticeSchedules, true);
 
   return (
     <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -93,7 +51,7 @@ export async function Schedules({ bands, bandPracticeSchedules }: { bands: Band[
                   </p>
                 </div>
                 <h3 className="font-bold text-lg text-zinc-900 dark:text-zinc-100 truncate">
-                  {item.band?.name}
+                  {item.bandName}
                 </h3>
               </div>
             </div>

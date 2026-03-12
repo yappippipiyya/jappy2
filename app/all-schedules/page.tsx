@@ -50,7 +50,6 @@ export default async function AllSchedulesPage() {
 
           <ExportCalendersButton />
 
-
           {/* スケジュール一覧セクション */}
           <Schedules bands={bands} bandPracticeSchedules={bandPracticeSchedules} />
 
