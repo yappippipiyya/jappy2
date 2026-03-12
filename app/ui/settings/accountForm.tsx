@@ -25,9 +25,7 @@ export default function AccountForm({ user, email }: { user?: User, email?: stri
         : await createAccount(name);
 
       if (res) {
-        user
-          ? toast.success("保存しました。")
-          : toast.success("登録しました。")
+        if (user) toast.success("アカウントを更新しました。");
 
         setSaved(true);
         router.refresh();

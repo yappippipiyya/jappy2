@@ -8,7 +8,7 @@ export default function CopyButton({ token }: { token: string }) {
     const fullURL = `${window.location.origin}/band/${token}/join?openExternalBrowser=1`;
     try {
       await navigator.clipboard.writeText(fullURL);
-      toast.success("コピーしました！")
+      toast.success("招待リンクをコピーしました！")
     } catch (err) {
       toast.error("コピーに失敗しました。")
     }

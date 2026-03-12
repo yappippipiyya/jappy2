@@ -23,7 +23,7 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
 
       success
         ? toast.success("参加しました！")
-        : toast.error("エラーが発生しました")
+        : toast.error("バンドに参加できませんでした。")
 
     };
     handlejoin();

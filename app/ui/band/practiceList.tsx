@@ -62,7 +62,7 @@ export function PracticeList({ band, schedules }: { band: Band; schedules: Sched
 
   const handleCopy = () => {
     navigator.clipboard.writeText(fullText).then(() => {
-      toast.success("コピーしました！")
+      toast.success("バンド練の日程をコピーしました！")
     }).catch(err => {
       console.error('Failed to copy text: ', err);
     });
