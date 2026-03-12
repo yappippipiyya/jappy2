@@ -42,6 +42,7 @@ export async function GET() {
       end: item.endDateTime,
       summary: item.bandName,
       id: `jappy-band-${item.bandId}-${currentCount}@jappy.local`,
+      sequence: Math.floor(Date.now() / 1000),
     });
   });
 
