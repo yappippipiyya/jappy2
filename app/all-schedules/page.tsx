@@ -4,10 +4,13 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 import { fetchUser } from "@/app/lib/services/user";
+import { fetchBands } from "@/app/lib/services/band";
+import { fetchSchedules } from "@/app/lib/services/schedule";
 
 import Navber from "@/app/ui/navbar";
 import Footer from "@/app/ui/footer";
 import { Schedules } from "@/app/ui/all-schedules/schedules";
+import { ExportCalendersButton } from "@/app/ui/all-schedules/exportCalendarButton";
 import { AllSchedulesSkeleton } from "@/app/ui/all-schedules/scheduleSkeleton";
 
 
@@ -21,6 +24,9 @@ export default async function AllSchedulesPage() {
 
   const user = await fetchUser(null, email)
   if (!user) return redirect("/signup");
+
+  const bands = await fetchBands(user.id);
+  const bandPracticeSchedules = await fetchSchedules(0, null, bands.map((b => b.id)))
 
   return (
     <main className="min-h-screen pb-20 bg-zinc-50 dark:bg-zinc-950">
@@ -42,8 +48,11 @@ export default async function AllSchedulesPage() {
             </h1>
           </div>
 
+          <ExportCalendersButton />
+
+
           {/* スケジュール一覧セクション */}
-          <Schedules user={user} />
+          <Schedules bands={bands} bandPracticeSchedules={bandPracticeSchedules} />
 
         </div>
       </Suspense>

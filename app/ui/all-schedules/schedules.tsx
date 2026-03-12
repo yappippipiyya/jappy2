@@ -1,6 +1,4 @@
-import { Band, User } from "@/app/lib/types";
-import { fetchBands } from "@/app/lib/services/band";
-import { fetchSchedules } from "@/app/lib/services/schedule";
+import { Band, Schedule } from "@/app/lib/types";
 
 
 export interface ScheduleItem {
@@ -13,13 +11,7 @@ export interface ScheduleItem {
 
 export type EnrichedSchedule = ScheduleItem & { band: Band };
 
-export async function Schedules({ user }: { user: User }) {
-  const bands = await fetchBands(user.id);
-
-  const bandPracticeSchedules = (await Promise.all(
-    bands.map((b) => fetchSchedules(0, b.id))
-  )).flat();
-
+export async function Schedules({ bands, bandPracticeSchedules }: { bands: Band[], bandPracticeSchedules: Schedule[] }) {
   const now = new Date();
   const currentYMD = now.toISOString().split('T')[0];
   const currentHour = now.getHours();
