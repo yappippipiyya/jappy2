@@ -10,6 +10,8 @@ import { fetchSchedules } from '@/app/lib/services/schedule';
 import { getRefinedSchedules } from "@/app/ui/all-schedules/hooks";
 
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   const session = await auth()
   const email = session?.user?.email || ""
