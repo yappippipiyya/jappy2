@@ -29,12 +29,17 @@ export async function GET() {
   calendar.prodId('-//Jappy//Band Practice Calendar//JP')
   calendar.timezone('Asia/Tokyo');
 
-  refinedSchedules.forEach((item, i) => {
+  const counts: Record<number, string> = {};
+
+  refinedSchedules.forEach(item => {
+    const currentCount = counts[item.bandId] ?? 0;
+    counts[item.bandId] = currentCount + 1;
+
     calendar.createEvent({
       start: item.startDateTime,
       end: item.endDateTime,
       summary: item.bandName,
-      id: `jappy-band-${item.bandId}-${i}@jappy.local`,
+      id: `jappy-band-${item.bandId}-${currentCount}@jappy.local`,
     });
   });
 
