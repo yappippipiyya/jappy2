@@ -45,14 +45,15 @@ export async function GET() {
       sequence: Math.floor(Date.now() / 1000),
     });
 
-    const triggerDate = new Date(item.startDateTime);
-    triggerDate.setHours(8, 0, 0, 0);
+    const startTime = new Date(item.startDateTime).getTime();
+    const alarmTime = new Date(item.startDateTime).setHours(8, 0, 0, 0);
+    const offsetSeconds = Math.round((alarmTime - startTime) / 1000);
 
     event.createAlarm({
       type: ICalAlarmType.display,
-      trigger: triggerDate,
+      trigger: offsetSeconds,
       description: `今日は${item.bandName}のバンド練があります`
-    })
+    });
   });
 
   return new NextResponse(calendar.toString(), {
