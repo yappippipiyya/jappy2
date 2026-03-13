@@ -3,6 +3,7 @@ import { Toaster } from "sonner";
 import { AlertProvider } from "@/app/ui/CustomAlert"
 import "@/app/ui/globals.css";
 
+
 const notoSansJp = Noto_Sans_JP({
   subsets: ["latin"],
   display: "swap",
@@ -22,6 +23,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icon.png"></link>
         <meta name="theme-color" content="#ffffff" />
       </head>
+
       <body className={`${notoSansJp.className} antialiased`}>
         <AlertProvider>
         {children}

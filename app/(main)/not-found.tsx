@@ -4,9 +4,6 @@ import Image from 'next/image';
 
 import { fetchUser } from "@/app/lib/services/user"
 
-import Navber from "@/app/ui/navbar"
-import Footer from "@/app/ui/footer"
-
 
 export const metadata = {
   title: 'Not Found'
@@ -20,9 +17,7 @@ export default async function Page() {
   if (!user) return redirect("/signup");
 
   return (
-    <main className="min-h-screen pb-20 bg-zinc-50 dark:bg-zinc-950">
-      <Navber />
-
+    <>
       <div className="flex flex-col">
         <div className="mx-5 mt-5">
           <p className="text-7xl font-bold my-1">404</p>
@@ -43,7 +38,6 @@ export default async function Page() {
         </div>
       </div>
 
-      <Footer />
-    </main>
+    </>
   );
 }

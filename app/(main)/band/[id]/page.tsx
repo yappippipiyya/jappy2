@@ -5,8 +5,6 @@ import { fetchUser } from "@/app/lib/services/user";
 import { fetchBand, fetchBandUsers } from "@/app/lib/services/band"
 import { fetchSchedules } from "@/app/lib/services/schedule"
 
-import Navber from "@/app/ui/navbar"
-import Footer from "@/app/ui/footer"
 import { Header } from "@/app/ui/band/header";
 import { BandContent } from "@/app/ui/band/bandContent";
 import { notFound } from "next/navigation";
@@ -47,15 +45,9 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   const isArchived = band.archived || false
 
   return (
-    <main className="min-h-screen pb-20 bg-zinc-50 dark:bg-zinc-950">
-      <Navber />
-
-      <div>
-        <Header band={band} isCreator={isBandCreator} isArchived={isArchived} />
-        <BandContent band={band} schedules={schedules} bandUsers={bandUsers}/>
-      </div>
-
-      <Footer />
-    </main>
+    <div>
+      <Header band={band} isCreator={isBandCreator} isArchived={isArchived} />
+      <BandContent band={band} schedules={schedules} bandUsers={bandUsers}/>
+    </div>
   );
 }
