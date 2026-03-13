@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { ICalCalendar, ICalCalendarMethod } from 'ical-generator';
+import { ICalAlarmType, ICalCalendar, ICalCalendarMethod } from 'ical-generator';
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
@@ -37,13 +37,22 @@ export async function GET() {
     const currentCount = counts[item.bandId] ?? 0;
     counts[item.bandId] = currentCount + 1;
 
-    calendar.createEvent({
+    const event = calendar.createEvent({
       start: item.startDateTime,
       end: item.endDateTime,
       summary: item.bandName,
       id: `jappy-band-${item.bandId}-${currentCount}@jappy.local`,
       sequence: Math.floor(Date.now() / 1000),
     });
+
+    const triggerDate = new Date(item.startDateTime);
+    triggerDate.setHours(8, 0, 0, 0);
+
+    event.createAlarm({
+      type: ICalAlarmType.display,
+      trigger: triggerDate,
+      description: `今日は${item.bandName}のバンド練があります`
+    })
   });
 
   return new NextResponse(calendar.toString(), {
