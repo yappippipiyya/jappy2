@@ -5,8 +5,6 @@ import { fetchUser } from "@/app/lib/services/user";
 import { fetchBands } from "@/app/lib/services/band";
 import { fetchSchedules, fetchFixedSchedules } from "@/app/lib/services/schedule";
 
-import Navber from "@/app/ui/navbar"
-import Footer from "@/app/ui/footer"
 import { ScheduleManageContent } from "@/app/ui/schedule-manage/scheduleManageContent";
 
 
@@ -33,17 +31,11 @@ export default async function Page() {
   const schedules = [...userSchedules, ...bandSchedules]
 
   return (
-    <main className="min-h-screen pb-20 bg-zinc-50 dark:bg-zinc-950">
-      <Navber />
-
       <div>
         <h1 className="m-7 text-center justify-center text-2xl font-bold tracking-tight ">
           スケジュール管理
         </h1>
         <ScheduleManageContent user={user} bands={bands} schedules={schedules} fixedSchedules={fixedSchedules} />
       </div>
-
-      <Footer />
-    </main>
   );
 }

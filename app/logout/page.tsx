@@ -4,8 +4,6 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import { handleSignOut } from "@/app/lib/actions/handleSignOut";
-import Navber from "@/app/ui/navbar";
-import Footer from "@/app/ui/footer";
 import { useAlert } from "@/app/ui/CustomAlert"
 
 
@@ -33,10 +31,5 @@ export default function LogoutPage() {
     showModal()
   }, []);
 
-  return (
-    <main className="min-h-screen pb-20 bg-zinc-50 dark:bg-zinc-950">
-      <Navber />
-      <Footer />
-    </main>
-  );
+  return (<></>);
 }

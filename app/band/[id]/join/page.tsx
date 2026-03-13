@@ -1,8 +1,5 @@
 "use client";
 
-import Navber from "@/app/ui/navbar"
-import Footer from "@/app/ui/footer"
-
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -31,14 +28,8 @@ export default function Page(props: { params: Promise<{ id: string }> }) {
 
 
   return (
-    <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-      <Navber />
-
-      <div className="flex justify-center items-center h-screen">
-        <p>処理中...</p>
-      </div>
-
-      <Footer />
-    </main>
+    <div className="flex justify-center items-center h-screen">
+      <p>処理中...</p>
+    </div>
   )
 }

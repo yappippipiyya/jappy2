@@ -5,8 +5,6 @@ import { Suspense } from "react";
 import { fetchUser } from "@/app/lib/services/user"
 import { fetchBands } from "@/app/lib/services/band"
 
-import Navber from "@/app/ui/navbar"
-import Footer from "@/app/ui/footer"
 import { CreateButton } from "@/app/ui/home/createButton"
 import { ScheduleCheck } from "@/app/ui/home/scheduleCheck"
 import { Bands } from "@/app/ui/home/bands"
@@ -28,9 +26,7 @@ export default async function HomePage() {
   const notArchivedBands = allBands.filter(b => !b.archived)
 
   return (
-    <main className="min-h-screen pb-20 bg-zinc-50 dark:bg-zinc-950">
-      <Navber />
-
+    <>
       <div className="max-w-2xl mx-auto">
 
         {/* スケジュールセクション */}
@@ -55,8 +51,6 @@ export default async function HomePage() {
         </section>
 
       </div>
-
-      <Footer />
-    </main>
+    </>
   );
 }

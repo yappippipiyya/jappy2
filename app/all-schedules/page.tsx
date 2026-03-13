@@ -7,8 +7,6 @@ import { fetchUser } from "@/app/lib/services/user";
 import { fetchBands } from "@/app/lib/services/band";
 import { fetchSchedules } from "@/app/lib/services/schedule";
 
-import Navber from "@/app/ui/navbar";
-import Footer from "@/app/ui/footer";
 import { Schedules } from "@/app/ui/all-schedules/schedules";
 import { ExportCalendersButton } from "@/app/ui/all-schedules/exportCalendarButton";
 import { AllSchedulesSkeleton } from "@/app/ui/all-schedules/scheduleSkeleton";
@@ -29,34 +27,28 @@ export default async function AllSchedulesPage() {
   const bandPracticeSchedules = await fetchSchedules(0, null, bands.map((b => b.id)))
 
   return (
-    <main className="min-h-screen pb-20 bg-zinc-50 dark:bg-zinc-950">
-      <Navber />
+    <Suspense fallback={<AllSchedulesSkeleton />}>
+      <div className="max-w-2xl mx-auto pt-4 px-5">
 
-      <Suspense fallback={<AllSchedulesSkeleton />}>
-        <div className="max-w-2xl mx-auto pt-4 px-5">
-
-          {/* ヘッダーセクション */}
-          <div className="flex items-center gap-2 mb-4">
-            <Link
-              href="/"
-              className="flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
-            >
-              <span className="material-symbols-outlined text-zinc-600 dark:text-zinc-400">arrow_back</span>
-            </Link>
-            <h1 className="mb-1 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-              今後のバンド練
-            </h1>
-          </div>
-
-          <ExportCalendersButton />
-
-          {/* スケジュール一覧セクション */}
-          <Schedules bands={bands} bandPracticeSchedules={bandPracticeSchedules} />
-
+        {/* ヘッダーセクション */}
+        <div className="flex items-center gap-2 mb-4">
+          <Link
+            href="/"
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+          >
+            <span className="material-symbols-outlined text-zinc-600 dark:text-zinc-400">arrow_back</span>
+          </Link>
+          <h1 className="mb-1 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+            今後のバンド練
+          </h1>
         </div>
-      </Suspense>
 
-      <Footer />
-    </main>
+        <ExportCalendersButton />
+
+        {/* スケジュール一覧セクション */}
+        <Schedules bands={bands} bandPracticeSchedules={bandPracticeSchedules} />
+
+      </div>
+    </Suspense>
   );
 }
