@@ -33,17 +33,10 @@ export default function Navbar() {
       <Link href="/" className="m-4 ml-5">
         <Image
           src="/jappy.png"
-          width={140}
-          height={40}
+          width={100}
+          height={30}
           alt="jappy logo"
-          className="hidden md:block"
-        />
-        <Image
-          src="/jappy.png"
-          width={120}
-          height={34}
-          alt="jappy logo"
-          className="md:hidden block"
+          className="block"
         />
       </Link>
     </nav>
