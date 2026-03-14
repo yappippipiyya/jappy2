@@ -20,7 +20,8 @@ export default async function Page() {
     {
       title: "ツール",
       content: [
-        { name: "固定スケジュール", icon: "calendar_today", href: "/settings/fixed-schedule", style: "" }
+        { name: "固定スケジュール", icon: "calendar_today", href: "/settings/fixed-schedule", style: "" },
+        { name: "使い方ガイド", icon: "help", href: "/help", style: "" }
       ]
     },
     {
@@ -47,9 +48,8 @@ export default async function Page() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`flex items-center gap-4 px-4 py-3 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors ${
-                    index !== group.content.length - 1 ? "border-b border-zinc-100 dark:border-zinc-800" : ""
-                  } ${item.style}`}
+                  className={`flex items-center gap-4 px-4 py-3 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors ${index !== group.content.length - 1 ? "border-b border-zinc-100 dark:border-zinc-800" : ""
+                    } ${item.style}`}
                 >
                   <span className="material-symbols-outlined text-zinc-600 dark:text-zinc-300">{item.icon}</span>
                   <span className="grow font-medium">{item.name}</span>
