@@ -1,11 +1,13 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 import { fetchUser } from "@/app/lib/services/user";
 import { fetchBands } from "@/app/lib/services/band";
 import { fetchSchedules, fetchFixedSchedules } from "@/app/lib/services/schedule";
 
 import { ScheduleManageContent } from "@/app/ui/schedule-manage/scheduleManageContent";
+import { ScheduleManageSkeleton } from "@/app/ui/schedule-manage/scheduleManageSkeleton";
 
 
 export const metadata = {
@@ -31,11 +33,11 @@ export default async function Page() {
   const schedules = [...userSchedules, ...bandSchedules]
 
   return (
-      <div>
-        <h1 className="m-7 text-center justify-center text-2xl font-bold tracking-tight ">
-          スケジュール管理
-        </h1>
-        <ScheduleManageContent user={user} bands={bands} schedules={schedules} fixedSchedules={fixedSchedules} />
-      </div>
+    <Suspense fallback={<ScheduleManageSkeleton />}>
+      <h1 className="m-7 text-center justify-center text-2xl font-bold tracking-tight ">
+        スケジュール管理
+      </h1>
+      <ScheduleManageContent user={user} bands={bands} schedules={schedules} fixedSchedules={fixedSchedules} />
+    </Suspense>
   );
 }
