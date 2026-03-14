@@ -46,7 +46,7 @@ export async function GET() {
     });
 
     const startDateTime = new Date(item.startDateTime)
-    const alarmTime = new Date(startDateTime.setHours(9, 0, 0, 0))
+    const alarmTime = new Date(startDateTime.setUTCHours(0, 0, 0, 0))
 
     event.createAlarm({
       type: ICalAlarmType.display,
